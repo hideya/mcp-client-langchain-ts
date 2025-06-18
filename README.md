@@ -1,7 +1,7 @@
-# MCP Client Using LangChain / TypeScript [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/hideya/mcp-langchain-client-ts/blob/main/LICENSE)
+# Simple CLI MCP Client Using LangChain / TypeScript [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/hideya/mcp-langchain-client-ts/blob/main/LICENSE)
 
 This simple [Model Context Protocol (MCP)](https://modelcontextprotocol.io/)
-client demonstrates the use of MCP server tools by LangChain ReAct Agent.
+client with command line interface demonstrates the use of MCP server tools by the LangChain ReAct Agent.
 
 It leverages a utility function `convertMcpToLangchainTools()` from
 [`@h1deya/langchain-mcp-tools`](https://www.npmjs.com/package/@h1deya/langchain-mcp-tools).  
@@ -9,7 +9,12 @@ This function handles parallel initialization of specified multiple MCP servers
 and converts their available tools into an array of LangChain-compatible tools
 ([`StructuredTool[]`](https://api.js.langchain.com/classes/_langchain_core.tools.StructuredTool.html)).
 
-LLMs from Anthropic, OpenAI and Groq are currently supported.
+This client supports both local (stdio) MCP servers as well as
+remote (Streamable HTTP/SSE/WebSocket) MCP servers that are accessible via a simple URL.
+This client only supports text results of tool calls.
+For the convenience of debugging MCP servers, this client prints local (stdio) MCP server logs to the console.
+
+LLMs from Anthropic, OpenAI and Google (GenAI) are currently supported.
 
 A python version of this MCP client is available
 [here](https://github.com/hideya/mcp-client-langchain-py)
@@ -22,7 +27,8 @@ A python version of this MCP client is available
   installed to run Python-based MCP servers
 - API keys from [Anthropic](https://console.anthropic.com/settings/keys),
   [OpenAI](https://platform.openai.com/api-keys), and/or
-  [Groq](https://console.groq.com/keys)
+  [Google GenAI](https://aistudio.google.com/apikey)
+<!--[Groq](https://console.groq.com/keys)-->
   as needed.
 
 ## Setup

@@ -3,17 +3,31 @@ import { readFileSync } from 'fs';
 
 export interface LLMConfig {
   model_provider: string;
-  model?: string;
+  model: string;
   temperature?: number;
   max_tokens?: number;
   max_completion_tokens?: number;
 }
 
-export interface MCPServerConfig {
+export interface CommandBasedConfig {
+  url?: never;
+  transport?: never;
   command: string;
-  args: string[];
+  args?: string[];
   env?: Record<string, string>;
+  stderr?: number;
 }
+
+export interface UrlBasedConfig {
+  url: string;
+  transport?: string;
+  command?: never;
+  args?: never;
+  env?: never;
+  stderr?: never;
+}
+
+export type MCPServerConfig = CommandBasedConfig | UrlBasedConfig;
 
 export interface Config {
   llm: LLMConfig;
@@ -90,8 +104,8 @@ function validateLLMConfig(llmConfig: unknown): asserts llmConfig is LLMConfig {
     throw new Error('LLM model_provider must be a string');
   }
 
-  if ('model' in llmConfig && typeof llmConfig.model !== 'string') {
-    throw new Error('LLM model must be a string if provided');
+  if (!('model' in llmConfig) || typeof llmConfig.model !== 'string') {
+    throw new Error('LLM model must be a string');
   }
 
   if ('temperature' in llmConfig && typeof llmConfig.temperature !== 'number') {
@@ -112,16 +126,29 @@ function validateMCPServerConfig(serverConfig: unknown): asserts serverConfig is
     throw new Error('MCP server configuration must be an object');
   }
 
-  if (!('command' in serverConfig) || typeof serverConfig.command !== 'string') {
+  if (!('url' in serverConfig) && !('command' in serverConfig)) {
+    throw new Error('MCP server configuration must include command or url');
+  }
+
+  if ('url' in serverConfig && typeof serverConfig.url !== 'string') {
+    throw new Error('MCP server url must be a string');
+  }
+
+  if ('transport' in serverConfig && typeof serverConfig.transport !== 'string') {
+    throw new Error('MCP server transport must be a string');
+  }
+
+  if ('command' in serverConfig && typeof serverConfig.command !== 'string') {
     throw new Error('MCP server command must be a string');
   }
 
-  if (!('args' in serverConfig) || !Array.isArray(serverConfig.args)) {
-    throw new Error('MCP server args must be an array');
-  }
-
-  if (serverConfig.args.some((arg: unknown) => typeof arg !== 'string')) {
-    throw new Error('All MCP server args must be strings');
+  if ('args' in serverConfig) {
+    if (!Array.isArray(serverConfig.args)) {
+      throw new Error('MCP server args must be an array');
+    }
+    if (serverConfig.args.some((arg: unknown) => typeof arg !== 'string')) {
+      throw new Error('All MCP server args must be strings');
+    }
   }
 
   if ('env' in serverConfig && serverConfig.env !== undefined) {

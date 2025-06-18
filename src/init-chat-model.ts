@@ -1,5 +1,6 @@
 import { ChatAnthropic } from '@langchain/anthropic';
 import { ChatOpenAI } from '@langchain/openai';
+import { ChatGoogleGenerativeAI } from "@langchain/google-genai";
 import { ChatGroq } from '@langchain/groq';
 import { BaseChatModel, BindToolsInput } from '@langchain/core/language_models/chat_models';
 
@@ -8,7 +9,7 @@ import { BaseChatModel, BindToolsInput } from '@langchain/core/language_models/c
 
 interface ChatModelConfig {
   modelProvider: string;
-  model?: string;
+  model: string;
   temperature?: number;
   maxTokens?: number,
   tools?: BindToolsInput[];
@@ -27,6 +28,10 @@ export function initChatModel(config: ChatModelConfig): BaseChatModel {
 
       case 'anthropic':
         model = new ChatAnthropic(llmConfig);
+        break;
+
+      case 'google_genai':
+        model = new ChatGoogleGenerativeAI(llmConfig);
         break;
 
       case 'groq':
