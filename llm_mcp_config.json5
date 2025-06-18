@@ -6,28 +6,38 @@
 // and refer to them with `${...}` notation as needed.
 {
     // "llm": {
+    //     // https://docs.anthropic.com/en/docs/about-claude/pricing
     //     "model_provider": "anthropic",
-    //     "model": "claude-3-7-sonnet-latest",
+    //     "model": "claude-3-5-haiku-latest",
+    //     // "model": "claude-sonnet-4-0",
     //     // "temperature": 0.0,
     //     // "max_tokens": 10000,
     // },
+
     "llm": {
+        // https://platform.openai.com/docs/pricing
         "model_provider": "openai",
-        "model": "o3-mini",
-        // "temperature": 0.0,  //  'temperature' is not supported with this model
+        "model": "gpt-4o-mini",
+        // model: "o4-mini",
+        // "temperature": 0.0,  //  'temperature' is not supported with "o4-mini"
         // "max_completion_tokens": 10000,  //  Use 'max_completion_tokens' instead of 'max_tokens'
     },
+
     // "llm": {
-    //     "model_provider": "groq",
-    //     "model": "llama-3.3-70b-versatile",
+    //     // https://ai.google.dev/gemini-api/docs/pricing
+    //     "model_provider": "google_genai",
+    //     model: "gemini-2.0-flash",
+    //     // model: "gemini-2.5-pro-preview-06-05",
     //     // "temperature": 0.0,
     //     // "max_tokens": 10000,
     // },
+
     "example_queries": [
-        "Tomorrow's weather in SF?",
-        "Read and briefly summarize the LICENSE file",
         "Read the news headlines on bbc.com",
+        "Read and briefly summarize the LICENSE file",
+        "Tomorrow's weather in SF?",
     ],
+
     "mcp_servers": {
         // https://github.com/modelcontextprotocol/servers/tree/main/src/filesystem
         "filesystem": {
@@ -53,6 +63,21 @@
                 "@h1deya/mcp-server-weather"
             ]
         },
+
+        // // Auto-detection: tries Streamable HTTP first, falls back to SSE on 4xx errors
+        // "auto-detect-server": {
+        //     url: `http://${server_host}:${server_port}/...`
+        // },
+
+        // // WebSocket
+        // "ws-server-name": {
+        //     url: `ws://${ws_server_host}:${ws_server_port}/...`
+        // },
+
+        // weather: {
+        //     "url": "http://localhost:${SSE_SERVER_PORT}/sse"
+        // },
+
         // // https://github.com/microsoft/playwright-mcp
         // "playwright": {
         //     "command": "npx",

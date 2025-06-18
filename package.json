@@ -1,6 +1,6 @@
 {
   "name": "mcp-client-langchain-ts",
-  "version": "0.1.20",
+  "version": "0.2.6",
   "description": "MCP Client Using LangChain / TypeScript",
   "license": "MIT",
   "keywords": [
@@ -24,10 +24,11 @@
     "clean": "git clean -fdxn -e .env && read -p 'OK?' && git clean -fdx -e .env"
   },
   "dependencies": {
-    "@h1deya/langchain-mcp-tools": "^0.1.20",
+    "@h1deya/langchain-mcp-tools": "^0.2.6",
     "@langchain/anthropic": "^0.3.11",
     "@langchain/community": "^0.3.20",
     "@langchain/core": "^0.3.26",
+    "@langchain/google-genai": "^0.2.12",
     "@langchain/groq": "^0.1.2",
     "@langchain/langgraph": "^0.2.36",
     "@langchain/openai": "^0.3.16",
@@ -36,12 +37,14 @@
     "@types/yargs": "^17.0.33",
     "dotenv": "^16.4.7",
     "json5": "^2.2.3",
+    "ws": "^8.18.2",
     "yargs": "^17.7.2",
     "zod": "^3.24.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.17.0",
     "@types/node": "^22.10.5",
+    "@types/ws": "^8.18.1",
     "@typescript-eslint/eslint-plugin": "^8.19.0",
     "@typescript-eslint/parser": "^8.19.0",
     "eslint": "^9.17.0",

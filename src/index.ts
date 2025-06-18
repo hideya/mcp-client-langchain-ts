@@ -1,22 +1,28 @@
-import { createReactAgent } from '@langchain/langgraph/prebuilt';
-import { MemorySaver } from '@langchain/langgraph';
-import { HumanMessage } from '@langchain/core/messages';
-import { convertMcpToLangchainTools, McpServerCleanupFn } from '@h1deya/langchain-mcp-tools';
-import { initChatModel } from './init-chat-model.js';
-import { loadConfig, Config } from './load-config.js';
-import readline from 'readline';
-import yargs from 'yargs';
-import { hideBin } from 'yargs/helpers';
-import dotenv from 'dotenv';
+import "dotenv/config";
+import { createReactAgent } from "@langchain/langgraph/prebuilt";
+import { MemorySaver } from "@langchain/langgraph";
+import { HumanMessage } from "@langchain/core/messages";
+import { convertMcpToLangchainTools, McpServerCleanupFn } from "@h1deya/langchain-mcp-tools";
+import { initChatModel } from "./init-chat-model.js";
+import { loadConfig, Config } from "./load-config.js";
+import readline from "readline";
+import yargs from "yargs";
+import { hideBin } from "yargs/helpers";
+import * as fs from "fs";
 
-// Initialize environment variables
-dotenv.config();
+// // FOR TESTING REMOTE SERVER CONNECTION
+// // Use the Supergateway to make the Weather Studio MCP Server accessible as an SSE server
+// import { startRemoteMcpServerLocally } from "./remote-server-utils.js";
+// const [sseServerProcess, sseServerPort] = await startRemoteMcpServerLocally(
+//   "SSE",  "npx -y @h1deya/mcp-server-weather");
+// process.env.SSE_SERVER_PORT = `${sseServerPort}`;
 
 // Constants
 const COLORS = {
-  YELLOW: '\x1b[33m',
-  CYAN: '\x1b[36m',
-  RESET: '\x1b[0m'
+  YELLOW: "\x1b[33m",
+  CYAN: "\x1b[36m",
+  GREEN: "\x1b[32m",
+  RESET: "\x1b[0m"
 } as const;
 
 // CLI argument setup
@@ -30,22 +36,22 @@ const parseArguments = (): Arguments => {
   return yargs(hideBin(process.argv))
     .options({
       config: {
-        type: 'string',
-        description: 'Path to config file',
+        type: "string",
+        description: "Path to config file",
         demandOption: false,
-        default: 'llm_mcp_config.json5',
-        alias: 'c',
+        default: "llm_mcp_config.json5",
+        alias: "c",
       },
       verbose: {
-        type: 'boolean',
-        description: 'Run with verbose logging',
+        type: "boolean",
+        description: "Run with verbose logging",
         demandOption: false,
         default: false,
-        alias: 'v',
+        alias: "v",
       },
     })
     .help()
-    .alias('help', 'h')
+    .alias("help", "h")
     .parseSync() as Arguments;
 };
 
@@ -69,18 +75,18 @@ async function getUserQuery(
   process.stdout.write(COLORS.RESET);
   const query = input.trim();
 
-  if (query.toLowerCase() === 'quit' || query.toLowerCase() === 'q') {
+  if (query.toLowerCase() === "quit" || query.toLowerCase() === "q") {
     rl.close();
     return undefined;
   }
 
-  if (query === '') {
+  if (query === "") {
     const exampleQuery = remainingQueries.shift();
     if (!exampleQuery) {
-      console.log('\nPlease type a query, or "quit" or "q" to exit\n');
+      console.log("\nPlease type a query, or 'quit' or 'q' to exit\n");
       return await getUserQuery(rl, remainingQueries);
     }
-    process.stdout.write('\x1b[1A\x1b[2K'); // Move up and clear the line
+    process.stdout.write("\x1b[1A\x1b[2K"); // Move up and clear the line
     console.log(`${COLORS.YELLOW}Example Query: ${exampleQuery}${COLORS.RESET}`);
     return exampleQuery;
   }
@@ -93,9 +99,9 @@ async function handleConversation(
   agent: ReturnType<typeof createReactAgent>,
   remainingQueries: string[]
 ): Promise<void> {
-  console.log('\nConversation started. Type "quit" or "q" to end the conversation.\n');
+  console.log("\nConversation started. Type 'quit' or 'q to end the conversation.\n");
   if (remainingQueries && remainingQueries.length > 0) {
-    console.log('Exaample Queries (just type Enter to supply them one by one):');
+    console.log("Exaample Queries (just type Enter to supply them one by one):");
     remainingQueries.forEach(query => console.log(`- ${query}`));
     console.log();
   }
@@ -113,23 +119,48 @@ async function handleConversation(
 
     const agentFinalState = await agent.invoke(
       { messages: [new HumanMessage(query)] },
-      { configurable: { thread_id: 'test-thread' } }
+      { configurable: { thread_id: "test-thread" } }
     );
 
     // the last message is an AIMessage
     const result = agentFinalState.messages[agentFinalState.messages.length - 1].content;
     const messageOneBefore = agentFinalState.messages[agentFinalState.messages.length - 2]
-    if (messageOneBefore.constructor.name === 'ToolMessage') {
+    if (messageOneBefore.constructor.name === "ToolMessage") {
       console.log(); // new line after tool call output
     }
 
     console.log(`${COLORS.CYAN}${result}${COLORS.RESET}\n`);
   }
 }
+    
+function addLogFileWatcher(logPath: string, serverName: string) {
+  const stats = fs.statSync(logPath);
+  let lastSize = stats.size;
+
+  const watcher = fs.watch(logPath, (eventType: string, filename: unknown) => {
+    if (eventType === 'change') {
+      // console.log(`*** file updated: "${filename}"`);
+      const stats = fs.statSync(logPath);
+      const currentSize = stats.size;
+      if (currentSize > lastSize) {
+        const buffer = Buffer.alloc(currentSize - lastSize);
+        const fd = fs.openSync(logPath, 'r');
+        fs.readSync(fd, buffer, 0, buffer.length, lastSize);
+        fs.closeSync(fd);
+        const newContent = buffer.toString();
+        console.log(
+          `${COLORS.GREEN}[MCP Server Log: "${serverName}"]${COLORS.RESET}`,
+          newContent.trim());
+        lastSize = currentSize;
+      }
+    }
+  });
+  return watcher;
+}
 
 // Application initialization
 async function initializeReactAgent(config: Config, verbose: boolean) {
-  console.log('Initializing model...', config.llm, '\n');
+  console.log("Initializing model...", config.llm, "\n");
   const llmConfig = {
     modelProvider: config.llm.model_provider,
     model: config.llm.model,
@@ -139,16 +170,45 @@ async function initializeReactAgent(config: Config, verbose: boolean) {
   const llm = initChatModel(llmConfig);
 
   console.log(`Initializing ${Object.keys(config.mcp_servers).length} MCP server(s)...\n`);
-  const { tools, cleanup } = await convertMcpToLangchainTools(
+
+  // Set a file descriptor to which MCP server's stderr is redirected
+  const openedLogFiles: { [serverName: string]: { fd: number, watcher: fs.FSWatcher } } = {};
+  Object.keys(config.mcp_servers).forEach(serverName => {
+    if (config.mcp_servers[serverName].command) {
+      const logPath = `mcp-server-${serverName}.log`;
+      const logFd = fs.openSync(logPath, "w");
+      config.mcp_servers[serverName].stderr = logFd;
+      const watcher = addLogFileWatcher(logPath, serverName);
+      openedLogFiles[logPath] = { fd: logFd, watcher };
+    }
+  });
+
+  const toolsAndCleanup = await convertMcpToLangchainTools(
     config.mcp_servers,
-    { logLevel: verbose ? 'debug' : 'info' }
+    { logLevel: verbose ? "debug" : "info" }
   );
+  const tools = toolsAndCleanup.tools;
+  const mcpCleanup = toolsAndCleanup.cleanup;
 
   const agent = createReactAgent({
     llm,
     tools,
     checkpointSaver: new MemorySaver(),
   });
+
+  async function cleanup() {
+    await mcpCleanup();
+
+    // close log files and their watchers
+    Object.keys(openedLogFiles).forEach(logPath => {
+      try {
+        openedLogFiles[logPath].watcher.close();
+        fs.closeSync(openedLogFiles[logPath].fd);
+      } catch (error) {
+        console.error(`Error closing log file: ${logPath}:`, error);
+      }
+    });
+  }
 
   return { agent, cleanup };
 }
