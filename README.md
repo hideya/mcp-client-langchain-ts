@@ -3,6 +3,37 @@
 This simple [Model Context Protocol (MCP)](https://modelcontextprotocol.io/)
 client with command line interface demonstrates the use of MCP server tools by the LangChain ReAct Agent.
 
+When testing LLM and MCP servers, their settings can be conveniently configured via a configuration file, such as the following:
+
+```json
+{
+    "llm": {
+        "model_provider": "openai",
+        "model": "gpt-4o-mini",
+    },
+
+    "mcp_servers": {
+        "fetch": {
+            "command": "uvx",
+            "args": [
+                "mcp-server-fetch"
+            ]
+        },
+        "weather": {
+            "command": "npx",
+            "args": [
+                "-y",
+                "@h1deya/mcp-server-weather"
+            ]
+        },
+        // Auto-detection: tries Streamable HTTP first, falls back to SSE
+        "remote-mcp-server": {
+            "url": "https://${SERVER_HOST}:${SERVER_PORT}/..."
+        },
+    }
+}
+```
+
 It leverages a utility function `convertMcpToLangchainTools()` from
 [`@h1deya/langchain-mcp-tools`](https://www.npmjs.com/package/@h1deya/langchain-mcp-tools).  
 This function handles parallel initialization of specified multiple MCP servers
@@ -12,6 +43,7 @@ and converts their available tools into an array of LangChain-compatible tools
 This client supports both local (stdio) MCP servers as well as
 remote (Streamable HTTP/SSE/WebSocket) MCP servers that are accessible via a simple URL.
 This client only supports text results of tool calls.
+
 For the convenience of debugging MCP servers, this client prints local (stdio) MCP server logs to the console.
 
 LLMs from Anthropic, OpenAI and Google (GenAI) are currently supported.

@@ -10,8 +10,12 @@ import yargs from "yargs";
 import { hideBin } from "yargs/helpers";
 import * as fs from "fs";
 
-// // FOR TESTING REMOTE SERVER CONNECTION
-// // Use the Supergateway to make the Weather Studio MCP Server accessible as an SSE server
+// // Remote server connection testing
+// // Uncomment the following code snippet and add the configuration below to the configuration file.
+// //        weather: {
+// //            "url": "http://localhost:${SSE_SERVER_PORT}/sse"
+// //        },
+// // This leverages the Supergateway to make the Weather Studio MCP Server accessible as an SSE server.
 // import { startRemoteMcpServerLocally } from "./remote-server-utils.js";
 // const [sseServerProcess, sseServerPort] = await startRemoteMcpServerLocally(
 //   "SSE",  "npx -y @h1deya/mcp-server-weather");

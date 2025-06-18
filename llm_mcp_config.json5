@@ -33,8 +33,8 @@
     // },
 
     "example_queries": [
-        "Read the news headlines on bbc.com",
         "Read and briefly summarize the LICENSE file",
+        "Read the news headlines on bbc.com",
         "Tomorrow's weather in SF?",
     ],
 
@@ -64,16 +64,18 @@
             ]
         },
 
-        // // Auto-detection: tries Streamable HTTP first, falls back to SSE on 4xx errors
+        // // Auto-detection: tries Streamable HTTP first, falls back to SSE
         // "auto-detect-server": {
-        //     url: `http://${server_host}:${server_port}/...`
+        //     "url": "http://${SERVER_HOST}:${SERVER_PORT}/..."
         // },
 
         // // WebSocket
         // "ws-server-name": {
-        //     url: `ws://${ws_server_host}:${ws_server_port}/...`
+        //     "url": "ws://${WS_SERVER_HOST}:${WS_SERVER_PORT}/..."
         // },
 
+        // // Test the SSE connection
+        // // See the comments at the top of index.ts
         // weather: {
         //     "url": "http://localhost:${SSE_SERVER_PORT}/sse"
         // },
