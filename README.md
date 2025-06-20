@@ -19,6 +19,7 @@ When testing LLM and MCP servers, their settings can be conveniently configured 
                 "mcp-server-fetch"
             ]
         },
+
         "weather": {
             "command": "npx",
             "args": [
@@ -26,9 +27,19 @@ When testing LLM and MCP servers, their settings can be conveniently configured 
                 "@h1deya/mcp-server-weather"
             ]
         },
+
         // Auto-detection: tries Streamable HTTP first, falls back to SSE
         "remote-mcp-server": {
             "url": "https://${SERVER_HOST}:${SERVER_PORT}/..."
+        },
+
+        // Example of authentication via Authorization header
+        "github": {
+          "type": "http",  // recommended to specify the protocol explicitly when authentication is used
+          "url": "https://api.githubcopilot.com/mcp/",
+          "headers": {
+            "Authorization": "Bearer ${GITHUB_PERSONAL_ACCESS_TOKEN}"
+          }
         },
     }
 }

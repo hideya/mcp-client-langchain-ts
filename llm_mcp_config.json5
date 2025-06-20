@@ -48,6 +48,7 @@
                 "."
             ]
         },
+
         // https://github.com/modelcontextprotocol/servers/tree/main/src/fetch
         "fetch": {
             "command": "uvx",
@@ -55,6 +56,7 @@
                 "mcp-server-fetch"
             ]
         },
+
         // https://github.com/modelcontextprotocol/quickstart-resources/tree/main/weather-server-python
         "weather": {
             "command": "npx",
@@ -74,10 +76,20 @@
         //     "url": "ws://${WS_SERVER_HOST}:${WS_SERVER_PORT}/..."
         // },
 
-        // // Test the SSE connection
+        // // Test SSE connection with the auto fallback
         // // See the comments at the top of index.ts
         // weather: {
         //     "url": "http://localhost:${SSE_SERVER_PORT}/sse"
+        // },
+
+        // // Example of authentication via Authorization header
+        // // https://github.com/github/github-mcp-server?tab=readme-ov-file#remote-github-mcp-server
+        // "github": {
+        //   "type": "http",  // recommended to specify the protocol explicitly when authentication is used
+        //   "url": "https://api.githubcopilot.com/mcp/",
+        //   "headers": {
+        //     "Authorization": "Bearer ${GITHUB_PERSONAL_ACCESS_TOKEN}"
+        //   }
         // },
 
         // // https://github.com/microsoft/playwright-mcp
@@ -88,6 +100,7 @@
         //         "@playwright/mcp@latest"
         //     ]
         // },
+
         // // https://github.com/modelcontextprotocol/servers/tree/main/src/brave-search
         // "brave-search": {
         //     "command": "npx",
