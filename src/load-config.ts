@@ -11,7 +11,9 @@ export interface LLMConfig {
 
 export interface CommandBasedConfig {
   url?: never;
-  transport?: never;
+  transport?: string;
+  type?: string;
+  headers?: never;
   command: string;
   args?: string[];
   env?: Record<string, string>;
@@ -21,6 +23,8 @@ export interface CommandBasedConfig {
 export interface UrlBasedConfig {
   url: string;
   transport?: string;
+  type?: string;
+  headers?: Record<string, string>;
   command?: never;
   args?: never;
   env?: never;
@@ -136,6 +140,23 @@ function validateMCPServerConfig(serverConfig: unknown): asserts serverConfig is
 
   if ('transport' in serverConfig && typeof serverConfig.transport !== 'string') {
     throw new Error('MCP server transport must be a string');
+  }
+
+  if ('type' in serverConfig && typeof serverConfig.type !== 'string') {
+    throw new Error('MCP server type must be a string');
+  }
+
+  if ('headers' in serverConfig && serverConfig.headers !== undefined) {
+    if (typeof serverConfig.headers !== 'object' || serverConfig.headers === null) {
+      throw new Error('MCP server headers must be an object if provided');
+    }
+
+    // Validate that all env values are strings
+    for (const [, value] of Object.entries(serverConfig.headers)) {
+      if (typeof value !== 'string') {
+        throw new Error('All MCP server headers values must be strings');
+      }
+    }
   }
 
   if ('command' in serverConfig && typeof serverConfig.command !== 'string') {
