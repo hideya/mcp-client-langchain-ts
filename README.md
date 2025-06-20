@@ -5,7 +5,7 @@ client with command line interface demonstrates the use of MCP server tools by t
 
 When testing LLM and MCP servers, their settings can be conveniently configured via a configuration file, such as the following:
 
-```json
+```json5
 {
     "llm": {
         "model_provider": "openai",
@@ -35,11 +35,11 @@ When testing LLM and MCP servers, their settings can be conveniently configured 
 
         // Example of authentication via Authorization header
         "github": {
-          "type": "http",  // recommended to specify the protocol explicitly when authentication is used
-          "url": "https://api.githubcopilot.com/mcp/",
-          "headers": {
-            "Authorization": "Bearer ${GITHUB_PERSONAL_ACCESS_TOKEN}"
-          }
+            "type": "http",  // recommended to specify the protocol explicitly when authentication is used
+            "url": "https://api.githubcopilot.com/mcp/",
+            "headers": {
+                "Authorization": "Bearer ${GITHUB_PERSONAL_ACCESS_TOKEN}"
+            }
         },
     }
 }
