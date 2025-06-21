@@ -227,8 +227,8 @@ async function initializeReactAgent(config: Config, verbose: boolean) {
 async function main(): Promise<void> {
   let mcpCleanup: McpServerCleanupFn | undefined;
 
+  const argv = parseArguments();
   try {
-    const argv = parseArguments();
     const config = loadConfig(argv.config);
 
     const { agent, cleanup } = await initializeReactAgent(config, argv.verbose);
@@ -240,12 +240,17 @@ async function main(): Promise<void> {
     if (error instanceof Error) {
       if (error.message.includes("Failed to load configuration")) {
         console.error(error.message);
-        return;
+        if (error.message.includes("ENOENT")) {
+          console.error(`Make sure the config file "${argv.config}" is available`);
+          console.error("Use the --config option to specify which JSON5 configuration file to read");
+        }
       } else if (error.message.includes("Failed to initialize chat model")) {
         console.error(error.message);
         console.error("Check the .env file for the API key settings");
-        return;
+      } else {
+        console.error(error.message);
       }
+      return;
     }
     throw error;
 
