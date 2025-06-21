@@ -10,6 +10,12 @@ import yargs from "yargs";
 import { hideBin } from "yargs/helpers";
 import * as fs from "fs";
 
+// NOTE: without the following, I got this error:
+//   ReferenceError: WebSocket is not defined
+//     at <anonymous> (.../node_modules/@modelcontextprotocol/sdk/src/client/websocket.ts:29:26)
+import WebSocket from 'ws';
+global.WebSocket = WebSocket as any;
+
 // // Remote server connection testing
 // // Uncomment the following code snippet and add the configuration below to the configuration file.
 // //        weather: {

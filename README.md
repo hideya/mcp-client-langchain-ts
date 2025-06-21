@@ -72,7 +72,7 @@ A python version of this MCP client is available
   installed to run Python-based MCP servers
 - API keys from [Anthropic](https://console.anthropic.com/settings/keys),
   [OpenAI](https://platform.openai.com/api-keys), and/or
-  [Google GenAI](https://aistudio.google.com/apikey) 
+  [Google GenAI](https://aistudio.google.com/apikey)
   as needed.
 
 ## Setup
