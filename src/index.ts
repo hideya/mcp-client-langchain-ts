@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 import "dotenv/config";
 import { createReactAgent } from "@langchain/langgraph/prebuilt";
 import { MemorySaver } from "@langchain/langgraph";
