@@ -85,7 +85,8 @@
         // // Example of authentication via Authorization header
         // // https://github.com/github/github-mcp-server?tab=readme-ov-file#remote-github-mcp-server
         // "github": {
-        //   "type": "http",  // recommended to specify the protocol explicitly when authentication is used
+        //   // To avoid auto protocol fallback, specify the protocol explicitly when using authentication
+        //   "type": "http",  // or `transport: "http",`
         //   "url": "https://api.githubcopilot.com/mcp/",
         //   "headers": {
         //     "Authorization": "Bearer ${GITHUB_PERSONAL_ACCESS_TOKEN}"
