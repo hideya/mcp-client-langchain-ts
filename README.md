@@ -27,16 +27,21 @@ A simple, text-based CLI client for [Model Context Protocol (MCP)](https://model
   code llm_mcp_config.json5
   ```
 
-  The following is a very simple configuration for quick testing:
+  The following is a simple configuration for quick testing:
   ```json5
   {
     "llm": {
       "model_provider": "openai",
       "model": "gpt-4o-mini",
+      // "model_provider": "anthropic",
+      // "model": "claude-3-5-haiku-latest",
+      // "model_provider": "google_genai",
+      // "model": "gemini-2.0-flash",
     },
 
     "example_queries": [
-      "Tomorrow's weather in San Francisco?",
+      "Tell me how LLMs work in a few sentences",
+      "Are there any weather alerts in California?",
     ],
 
     "mcp_servers": {
@@ -76,10 +81,10 @@ npx @h1deya/mcp-try-cli
 ### With Options
 
 ```bash
-# Use custom config file
+# Specify the config file to use
 npx @h1deya/mcp-try-cli --config my-config.json5
 
-# Store logs in specific directory
+# Store local (stdio) MCP server logs in specific directory
 npx @h1deya/mcp-try-cli --log-dir ./logs
 
 # Enable verbose logging
@@ -88,6 +93,12 @@ npx @h1deya/mcp-try-cli --verbose
 # Show help
 npx @h1deya/mcp-try-cli --help
 ```
+
+## Supported LLM Providers
+
+- **OpenAI**: `gpt-4o`, `gpt-4o-mini`, etc.
+- **Anthropic**: `claude-sonnet-4-0`, `claude-3-5-haiku-latest`, etc.
+- **Google (GenAI)**: `gemini-2.0-flash`, `gemini-1.5-pro`, etc.
 
 ## Configuration
 
@@ -115,19 +126,20 @@ Create a `llm_mcp_config.json5` file:
   },
   
   // "llm": {
-  //     "model_provider": "anthropic",
-  //     "model": "claude-3-5-haiku-latest",
-  //     // "model": "claude-sonnet-4-0",
+  //   "model_provider": "anthropic",
+  //   "model": "claude-3-5-haiku-latest",
+  //   // "model": "claude-sonnet-4-0",
   // },
 
   // "llm": {
-  //     "model_provider": "google_genai",
-  //     "model": "gemini-2.0-flash",
-  //     // "model": "gemini-2.5-pro-preview-06-05",
+  //   "model_provider": "google_genai",
+  //   "model": "gemini-2.0-flash",
+  //   // "model": "gemini-2.5-pro-preview-06-05",
   // }
 
   "example_queries": [
-    "Tomorrow's weather in San Francisco?",
+    "Tell me how LLMs work in a few sentences",
+    "Are there any weather alerts in California?",
     "Read the news headlines on bbc.com",
   ],
 
@@ -169,75 +181,20 @@ Create a `llm_mcp_config.json5` file:
 Create a `.env` file for API keys:
 
 ```bash
-# OpenAI
-OPENAI_API_KEY=your_openai_api_key
+OPENAI_API_KEY=sk-ant-...
+ANTHROPIC_API_KEY=sk-proj-...
+GOOGLE_API_KEY=AI...
 
-# Anthropic
-ANTHROPIC_API_KEY=your_anthropic_api_key
-
-# Google
-GOOGLE_API_KEY=your_google_api_key
-
-# Other services
-GITHUB_TOKEN=your_github_token
-BRAVE_API_KEY=your_brave_api_key
+# Other services as needed
+GITHUB_PERSONAL_ACCESS_TOKEN=github_pat_...
+BRAVE_API_KEY=BSA...
 ```
-
-## Supported LLM Providers
-
-- **OpenAI**: `gpt-4o`, `gpt-4o-mini`, etc.
-- **Anthropic**: `claude-sonnet-4-0`, `claude-3-5-haiku-latest`, etc.
-- **Google**: `gemini-2.0-flash`, `gemini-1.5-pro`, etc.
 
 ## Popular MCP Servers to Try
 
-```bash
-# Filesystem operations
-npx @modelcontextprotocol/server-filesystem
+There are quite a few useful MCP servers already available:
 
-# Web fetching
-npx @modelcontextprotocol/server-fetch  
-
-# Weather data
-npx @h1deya/mcp-server-weather
-
-# Database operations
-npx @modelcontextprotocol/server-sqlite
-
-# GitHub integration
-# Requires GITHUB_TOKEN
-```
-
-## CLI Options
-
-| Option | Alias | Description | Default |
-|--------|-------|-------------|---------|
-| `--config` | `-c` | Path to config file | `llm_mcp_config.json5` |
-| `--log-dir` | `-l` | Directory for log files | `.` (current directory) |
-| `--verbose` | `-v` | Enable verbose logging | `false` |
-| `--help` | `-h` | Show help message | |
-
-## Examples
-
-### Test a filesystem server
-
-```bash
-npx @h1deya/mcp-try-cli
-# Then try: "List all files in the current directory"
-```
-
-### Explore a weather server
-
-```bash
-npx @h1deya/mcp-try-cli
-# Then try: "What's the weather in San Francisco?"
-```
-
-### Debug with verbose logging
-
-```bash
-npx @h1deya/mcp-try-cli --verbose --log-dir ./debug-logs
-```
+- [MCP Server Listing on the Official Site](https://github.com/modelcontextprotocol/servers?tab=readme-ov-file#model-context-protocol-servers)
 
 ## Troubleshooting
 
