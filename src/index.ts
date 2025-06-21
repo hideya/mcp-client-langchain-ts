@@ -9,6 +9,7 @@ import readline from "readline";
 import yargs from "yargs";
 import { hideBin } from "yargs/helpers";
 import * as fs from "fs";
+import * as path from "path";
 
 // NOTE: without the following, I got this error:
 //   ReferenceError: WebSocket is not defined
@@ -39,6 +40,7 @@ const COLORS = {
 interface Arguments {
   config: string;
   verbose: boolean;
+  logDir: string;
   [key: string]: unknown;
 }
 
@@ -58,6 +60,13 @@ const parseArguments = (): Arguments => {
         demandOption: false,
         default: false,
         alias: "v",
+      },
+      logDir: {
+        type: "string",
+        description: "Directory to store MCP server log files",
+        demandOption: false,
+        default: ".",
+        alias: "l",
       },
     })
     .help()
@@ -169,7 +178,7 @@ function addLogFileWatcher(logPath: string, serverName: string) {
 }
 
 // Application initialization
-async function initializeReactAgent(config: Config, verbose: boolean) {
+async function initializeReactAgent(config: Config, verbose: boolean, logDir: string) {
   console.log("Initializing model...", config.llm, "\n");
   const llmConfig = {
     modelProvider: config.llm.model_provider,
@@ -181,11 +190,18 @@ async function initializeReactAgent(config: Config, verbose: boolean) {
 
   console.log(`Initializing ${Object.keys(config.mcp_servers).length} MCP server(s)...\n`);
 
+  // Ensure log directory exists
+  if (!fs.existsSync(logDir)) {
+    fs.mkdirSync(logDir, { recursive: true });
+    console.log(`Created log directory: ${logDir}`);
+  }
+
   // Set a file descriptor to which MCP server's stderr is redirected
   const openedLogFiles: { [serverName: string]: { fd: number, watcher: fs.FSWatcher } } = {};
   Object.keys(config.mcp_servers).forEach(serverName => {
     if (config.mcp_servers[serverName].command) {
-      const logPath = `mcp-server-${serverName}.log`;
+      const logPath = path.join(logDir, `mcp-server-${serverName}.log`);
+      console.log(`Writing MCP server log file: ${logPath}`);
       const logFd = fs.openSync(logPath, "w");
       config.mcp_servers[serverName].stderr = logFd;
       const watcher = addLogFileWatcher(logPath, serverName);
@@ -231,7 +247,7 @@ async function main(): Promise<void> {
   try {
     const config = loadConfig(argv.config);
 
-    const { agent, cleanup } = await initializeReactAgent(config, argv.verbose);
+    const { agent, cleanup } = await initializeReactAgent(config, argv.verbose, argv.logDir);
     mcpCleanup = cleanup;
 
     await handleConversation(agent, config.example_queries ?? []);
