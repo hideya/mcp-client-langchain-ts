@@ -230,6 +230,19 @@ async function main(): Promise<void> {
 
     await handleConversation(agent, config.example_queries ?? []);
 
+  } catch (error) {
+    if (error instanceof Error) {
+      if (error.message.includes("Failed to load configuration")) {
+        console.error(error.message);
+        return;
+      } else if (error.message.includes("Failed to initialize chat model")) {
+        console.error(error.message);
+        console.error("Check the .env file for the API key settings");
+        return;
+      }
+    }
+    throw error;
+
   } finally {
     await mcpCleanup?.();
   }
