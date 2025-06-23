@@ -30,7 +30,7 @@
     //     // https://console.cloud.google.com/billing
     //     "model_provider": "google_genai",
     //     "model": "gemini-2.0-flash",
-    //     // "model": "gemini-2.5-pro-preview-06-05",
+    //     // "model": "gemini-1.5-pro",
     //     // "temperature": 0.0,
     //     // "max_tokens": 10000,
     // },
@@ -38,7 +38,7 @@
     "example_queries": [
         "Read and briefly summarize the LICENSE file",
         "Read the news headlines on bbc.com",
-        "Tomorrow's weather in SF?",
+        "Are there any weather alerts in California?",
     ],
 
     "mcp_servers": {
