@@ -36,9 +36,11 @@
     // },
 
     "example_queries": [
-        "Read and briefly summarize the LICENSE file",
-        "Read the news headlines on bbc.com",
         "Are there any weather alerts in California?",
+        "Read the news headlines on bbc.com",
+        "Read and briefly summarize the LICENSE file",
+        // "Open the webpage at bbc.com",
+        // "Search the web and get today's news related to tokyo",
     ],
 
     "mcp_servers": {
@@ -101,22 +103,14 @@
         // // https://github.com/microsoft/playwright-mcp
         // "playwright": {
         //     "command": "npx",
-        //     "args": [
-        //         "-y",
-        //         "@playwright/mcp@latest"
-        //     ]
+        //     "args": [ "-y", "@playwright/mcp@latest" ]
         // },
 
         // // https://github.com/modelcontextprotocol/servers/tree/main/src/brave-search
         // "brave-search": {
         //     "command": "npx",
-        //     "args": [
-        //         "-y",
-        //         "@modelcontextprotocol/server-brave-search"
-        //     ],
-        //     "env": {
-        //         "BRAVE_API_KEY": "${BRAVE_API_KEY}"
-        //     }
+        //     "args": [ "-y", "@modelcontextprotocol/server-brave-search"],
+        //     "env": { "BRAVE_API_KEY": "${BRAVE_API_KEY}" }
         // },
     }
 }

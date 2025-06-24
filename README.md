@@ -147,15 +147,19 @@ Create a `llm_mcp_config.json5` file:
     // Local MCP server that uses `npx`
     "weather": {
       "command": "npx", 
-      "args": ["-y", "@h1deya/mcp-server-weather"]
+      "args": [ "-y", "@h1deya/mcp-server-weather" ]
     },
 
     // Another local server that uses `uvx`
     "fetch": {
       "command": "uvx",
-      "args": [
-          "mcp-server-fetch"
-      ]
+      "args": [ "mcp-server-fetch" ]
+    },
+
+    "brave-search": {
+      "command": "npx",
+      "args": [ "-y", "@modelcontextprotocol/server-brave-search" ],
+      "env": { "BRAVE_API_KEY": "${BRAVE_API_KEY}" }
     },
 
     // Remote MCP server via URL
