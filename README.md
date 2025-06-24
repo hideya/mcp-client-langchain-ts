@@ -18,7 +18,10 @@ A simple, text-based CLI client for [Model Context Protocol (MCP)](https://model
 
 - Setup API keys
   ```bash
-  cp .env.template .env
+  echo "ANTHROPIC_API_KEY=sk-ant-...                                       
+  OPENAI_API_KEY=sk-proj-...
+  GOOGLE_API_KEY=AI..." > .env
+  
   code .env
   ```
 
@@ -39,17 +42,17 @@ A simple, text-based CLI client for [Model Context Protocol (MCP)](https://model
       // "model": "gemini-2.0-flash",
     },
 
-    "example_queries": [
-      "Tell me how LLMs work in a few sentences",
-      "Are there any weather alerts in California?",
-    ],
-
     "mcp_servers": {
       "weather": {
         "command": "npx", 
         "args": ["-y", "@h1deya/mcp-server-weather"]
       },
-    }
+    },
+
+    "example_queries": [
+      "Tell me how LLMs work in a few sentences",
+      "Are there any weather alerts in California?",
+    ],
   }
   ```
 - Run directly with npx (no installation needed)
@@ -65,7 +68,6 @@ A simple, text-based CLI client for [Model Context Protocol (MCP)](https://model
 
 See [README_DEV.md](https://github.com/hideya/mcp-client-langchain-ts/blob/main/README_DEV.md)
 
-
 ## Features
 
 - **Zero setup**: Works out of the box with popular MCP servers
@@ -73,7 +75,7 @@ See [README_DEV.md](https://github.com/hideya/mcp-client-langchain-ts/blob/main/
 - **Multiple LLM providers**: OpenAI, Anthropic, Google Gemini
 - **Command & URL servers**: Support for both local and remote MCP servers
 - **Real-time logging**: Live stdio MCP server logs with customizable log directory
-- **Interactive testing**: Example queries to get started quickly
+- **Interactive testing**: Example queries for the convenience of repeated testing
 
 ## Usage
 
