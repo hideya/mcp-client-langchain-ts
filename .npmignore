@@ -1,0 +1,31 @@
+# Source files
+src/
+*.ts
+!*.d.ts
+
+# Development files
+.env
+.env.*
+*.log
+tsconfig.json
+eslint.config.js
+
+# Build artifacts
+build/
+node_modules/
+
+# Development tools
+.git/
+.DS_Store
+.vscode/
+.idea/
+
+# Example/test files
+examples/
+test/
+tests/
+*.test.*
+*.spec.*
+
+# Documentation source
+docs/
