@@ -61,6 +61,11 @@ A simple, text-based CLI client for [Model Context Protocol (MCP)](https://model
   mcp-try-cli
   ```
 
+## Building from Source
+
+See [README_DEV.md](https://github.com/hideya/mcp-client-langchain-ts/blob/main/README_DEV.md)
+
+
 ## Features
 
 - **Zero setup**: Works out of the box with popular MCP servers

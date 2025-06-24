@@ -10,22 +10,21 @@ When testing LLM and MCP servers, their settings can be conveniently configured 
     "llm": {
         "model_provider": "openai",
         "model": "gpt-4o-mini",
+        // "model_provider": "anthropic",
+        // "model": "claude-3-5-haiku-latest",
+        // "model_provider": "google_genai",
+        // "model": "gemini-2.0-flash",
     },
 
     "mcp_servers": {
         "fetch": {
             "command": "uvx",
-            "args": [
-                "mcp-server-fetch"
-            ]
+            "args": [ "mcp-server-fetch" ]
         },
 
         "weather": {
             "command": "npx",
-            "args": [
-                "-y",
-                "@h1deya/mcp-server-weather"
-            ]
+            "args": [ "-y", "@h1deya/mcp-server-weather" ]
         },
 
         // Auto-detection: tries Streamable HTTP first, falls back to SSE
@@ -66,7 +65,7 @@ A python version of this MCP client is available
 
 ## Prerequisites
 
-- Node.js 16+
+- Node.js 18+
 - npm 7+ (`npx`) to run Node.js-based MCP servers
 - [optional] [`uv` (`uvx`)](https://docs.astral.sh/uv/getting-started/installation/)
   installed to run Python-based MCP servers
@@ -76,12 +75,18 @@ A python version of this MCP client is available
   as needed.
 
 ## Setup
-1. Install dependencies:
+1. Clone the repository:
+    ```bash
+    git clone https://github.com/hideya/mcp-client-langchain-ts.git
+    cd mcp-client-langchain-ts
+    ```
+
+2. Install dependencies:
     ```bash
     npm install
     ```
 
-2. Setup API keys:
+3. Setup API keys:
     ```bash
     cp .env.template .env
     ```
@@ -89,7 +94,7 @@ A python version of this MCP client is available
     - `.gitignore` is configured to ignore `.env`
       to prevent accidental commits of the credentials.
 
-3. Configure LLM and MCP Servers settings `llm_mcp_config.json5` as needed.
+4. Configure LLM and MCP Servers settings `llm_mcp_config.json5` as needed.
 
     - [The configuration file format](https://github.com/hideya/mcp-client-langchain-ts/blob/main/llm_mcp_config.json5)
       for MCP servers follows the same structure as
