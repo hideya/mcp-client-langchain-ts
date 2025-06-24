@@ -2,4 +2,8 @@
 .env
 node_modules/
 *.log
+dist/
+build/
+*.tgz
+
 .DS_Store

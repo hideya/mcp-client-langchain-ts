@@ -1,19 +1,42 @@
 {
-  "name": "mcp-client-langchain-ts",
-  "version": "0.2.8",
-  "description": "MCP Client Using LangChain / TypeScript",
+  "name": "@h1deya/mcp-try-cli",
+  "version": "0.2.9",
+  "description": "Simple CLI MCP Client to quickly test and explore MCP servers from the command line",
   "license": "MIT",
   "keywords": [
-    "modelcontextprotocol",
     "mcp",
-    "mcp-client",
+    "cli",
+    "try",
+    "test",
+    "model-context-protocol",
     "langchain",
-    "langchain-tyoescript",
-    "tool-calling",
+    "tools",
     "typescript",
-    "nodejs"
+    "client",
+    "simple",
+    "quick",
+    "explore"
   ],
   "author": "hideya kawahara",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hideya/mcp-client-langchain-ts.git"
+  },
+  "bugs": {
+    "url": "https://github.com/hideya/mcp-client-langchain-ts/issues"
+  },
+  "bin": {
+    "mcp-try-cli": "dist/index.js"
+  },
+  "main": "./dist/index.js",
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=18.0.0"
+  },
   "type": "module",
   "scripts": {
     "start": "tsx src/index.ts",
@@ -21,10 +44,15 @@
     "start:v": "tsx src/index.ts -v",
     "dev": "tsx watch src/index.ts",
     "lint": "eslint src",
-    "clean": "git clean -fdxn -e .env && read -p 'OK?' && git clean -fdx -e .env"
+    "clean": "git clean -fdxn -e .env && read -p 'OK?' && git clean -fdx -e .env",
+    "test": "echo \"No tests specified\" && exit 0",
+    "build": "tsc && chmod +x dist/index.js",
+    "publish:prepare": "npm run clean && npm install && npm run build",
+    "publish:test": "npm run publish:prepare && npm publish --access=public --dry-run",
+    "publish:do": "npm run publish:prepare && npm publish --access=public"
   },
   "dependencies": {
-    "@h1deya/langchain-mcp-tools": "^0.2.8",
+    "@h1deya/langchain-mcp-tools": "^0.2.9",
     "@langchain/anthropic": "^0.3.11",
     "@langchain/community": "^0.3.20",
     "@langchain/core": "^0.3.26",
@@ -33,7 +61,6 @@
     "@langchain/langgraph": "^0.2.36",
     "@langchain/openai": "^0.3.16",
     "@modelcontextprotocol/sdk": "^1.0.4",
-    "@n8n/json-schema-to-zod": "^1.1.0",
     "@types/yargs": "^17.0.33",
     "dotenv": "^16.4.7",
     "json5": "^2.2.3",
