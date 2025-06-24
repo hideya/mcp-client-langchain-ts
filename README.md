@@ -1,8 +1,9 @@
 # Simple CLI MCP Client to Explore MCP Servers [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/hideya/mcp-langchain-client-ts/blob/main/LICENSE)
 
-> Quickly test and explore MCP servers from the command line
+**Quickly test and explore MCP servers from the command line!**
 
-A simple, text-based CLI client for [Model Context Protocol (MCP)](https://modelcontextprotocol.io/) servers built with LangChain and TypeScript. Suitable for testing MCP servers, exploring their capabilities, and prototyping integrations.
+A simple, text-based CLI client for [Model Context Protocol (MCP)](https://modelcontextprotocol.io/) servers built with LangChain and TypeScript.  
+Suitable for testing MCP servers, exploring their capabilities, and prototyping integrations.
 
 ## Prerequisites
 
@@ -16,16 +17,13 @@ A simple, text-based CLI client for [Model Context Protocol (MCP)](https://model
 
 ## Quick Start
 
-- Setup API keys
+- Install `mcp-try-cli` tool.
+  This can take up to a few minutes to complete:
   ```bash
-  echo "ANTHROPIC_API_KEY=sk-ant-...                                       
-  OPENAI_API_KEY=sk-proj-...
-  GOOGLE_API_KEY=AI..." > .env
-  
-  code .env
+  npm install -g @h1deya/mcp-try-cli
   ```
 
-- Configure LLM and MCP Servers settings
+- Configure LLM and MCP Servers settings via the configuration file, `llm_mcp_config.json5`
   ```bash
   code llm_mcp_config.json5
   ```
@@ -55,14 +53,23 @@ A simple, text-based CLI client for [Model Context Protocol (MCP)](https://model
     ],
   }
   ```
-- Run directly with npx (no installation needed)
-  ```bash
-  npx @h1deya/mcp-try-cli
 
-  # Or install globally
-  npm install -g @h1deya/mcp-try-cli
+- Set up API keys
+  ```bash
+  echo "ANTHROPIC_API_KEY=sk-ant-...                                       
+  OPENAI_API_KEY=sk-proj-...
+  GOOGLE_API_KEY=AI..." > .env
+  
+  code .env
+  ```
+
+- Run the tool
+  ```bash
   mcp-try-cli
   ```
+  By default, it reads the configuration file, `llm_mcp_config.json5`, from the current directory.  
+  Then, it applies the environment variables specified in the `.env` file,
+  as well as the ones that are already defined.
 
 ## Building from Source
 
@@ -82,23 +89,28 @@ See [README_DEV.md](https://github.com/hideya/mcp-client-langchain-ts/blob/main/
 ### Basic Usage
 
 ```bash
-npx @h1deya/mcp-try-cli
+mcp-try-cli
 ```
+
+By default, it reads the configuration file, `llm_mcp_config.json5`, from the current directory.  
+Then, it applies the environment variables specified in the `.env` file,
+as well as the ones that are already defined.  
+It outputs local MCP server logs to the current directory.
 
 ### With Options
 
 ```bash
 # Specify the config file to use
-npx @h1deya/mcp-try-cli --config my-config.json5
+mcp-try-cli --config my-config.json5
 
 # Store local (stdio) MCP server logs in specific directory
-npx @h1deya/mcp-try-cli --log-dir ./logs
+mcp-try-cli --log-dir ./logs
 
 # Enable verbose logging
-npx @h1deya/mcp-try-cli --verbose
+mcp-try-cli --verbose
 
 # Show help
-npx @h1deya/mcp-try-cli --help
+mcp-try-cli --help
 ```
 
 ## Supported LLM Providers

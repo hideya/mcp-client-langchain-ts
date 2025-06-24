@@ -1,5 +1,5 @@
 {
-  "name": "@h1deya/mcp-try-cli-test-20250621",
+  "name": "@h1deya/mcp-try-cli",
   "version": "0.0.1",
   "description": "Simple CLI MCP Client to quickly test and explore MCP servers from the command line",
   "license": "MIT",
@@ -52,7 +52,7 @@
     "publish:do": "npm run publish:prepare && npm publish --access=public"
   },
   "dependencies": {
-    "@h1deya/langchain-mcp-tools": "^0.2.8",
+    "@h1deya/langchain-mcp-tools": "^0.2.9",
     "@langchain/anthropic": "^0.3.11",
     "@langchain/community": "^0.3.20",
     "@langchain/core": "^0.3.26",
@@ -61,7 +61,6 @@
     "@langchain/langgraph": "^0.2.36",
     "@langchain/openai": "^0.3.16",
     "@modelcontextprotocol/sdk": "^1.0.4",
-    "@n8n/json-schema-to-zod": "^1.1.0",
     "@types/yargs": "^17.0.33",
     "dotenv": "^16.4.7",
     "json5": "^2.2.3",
