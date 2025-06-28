@@ -1,4 +1,4 @@
-# Simple CLI MCP Client to Explore MCP Servers [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/hideya/mcp-langchain-client-ts/blob/main/LICENSE) [![npm version](https://img.shields.io/npm/v/@h1deya/mcp-try-cli.svg)](https://www.npmjs.com/package/@h1deya/mcp-try-cli)
+# Simple CLI MCP Client to Explore MCP Servers / TypeScript [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/hideya/mcp-langchain-client-ts/blob/main/LICENSE) [![npm version](https://img.shields.io/npm/v/@h1deya/mcp-try-cli.svg)](https://www.npmjs.com/package/@h1deya/mcp-try-cli)
 
 
 **Quickly test and explore MCP servers from the command line!**
@@ -6,13 +6,18 @@
 A simple, text-based CLI client for [Model Context Protocol (MCP)](https://modelcontextprotocol.io/) servers built with LangChain and TypeScript.  
 Suitable for testing MCP servers, exploring their capabilities, and prototyping integrations.
 
+Internally it uses  [LangChain ReAct Agent](https://github.com/langchain-ai/react-agent-js) and
+a utility function `convertMcpToLangchainTools()` from [`@h1deya/langchain-mcp-tools`](https://www.npmjs.com/package/@h1deya/langchain-mcp-tools).
+
 ## Prerequisites
 
 - Node.js 18+
 - [optional] [`uv` (`uvx`)](https://docs.astral.sh/uv/getting-started/installation/)
   installed to run Python-based local (stdio) MCP servers
-- API keys from [Anthropic](https://console.anthropic.com/settings/keys),
-  [OpenAI](https://platform.openai.com/api-keys), and/or
+- LLM API keys from
+  [OpenAI](https://platform.openai.com/api-keys),
+  [Anthropic](https://console.anthropic.com/settings/keys),
+  and/or
   [Google GenAI](https://aistudio.google.com/apikey)
   as needed
 
@@ -74,16 +79,23 @@ Suitable for testing MCP servers, exploring their capabilities, and prototyping 
 
 ## Building from Source
 
-See [README_DEV.md](https://github.com/hideya/mcp-client-langchain-ts/blob/main/README_DEV.md)
+See [README_DEV.md](https://github.com/hideya/mcp-client-langchain-ts/blob/main/README_DEV.md) for details.
 
 ## Features
 
 - **Easy setup**: Works out of the box with popular MCP servers
 - **Flexible configuration**: JSON5 config with environment variable support
-- **Multiple LLM providers**: OpenAI, Anthropic, Google Gemini
+- **Multiple LLM providers**: OpenAI, Anthropic, Google (GenAI)
 - **Command & URL servers**: Support for both local and remote MCP servers
 - **Real-time logging**: Live stdio MCP server logs with customizable log directory
 - **Interactive testing**: Example queries for the convenience of repeated testing
+
+## Limitations
+
+- **Tool Return Types**: Currently, only text results of tool calls are supported.
+It uses LangChain's `response_format: 'content'` (the default) internally, which only supports text strings.
+While MCP tools can return multiple content types (text, images, etc.), this library currently filters and uses only text content.
+- **MCP Features**: Only MCP [Tools](https://modelcontextprotocol.io/docs/concepts/tools) are supported. Other MCP features like Resources, Prompts, and Sampling are not implemented.
 
 ## Usage
 
