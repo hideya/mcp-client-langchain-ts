@@ -4,7 +4,7 @@ import "dotenv/config";
 import { createReactAgent } from "@langchain/langgraph/prebuilt";
 import { MemorySaver } from "@langchain/langgraph";
 import { HumanMessage } from "@langchain/core/messages";
-import { convertMcpToLangchainTools, McpServerCleanupFn } from "@h1deya/langchain-mcp-tools";
+import { convertMcpToLangchainTools, McpServerCleanupFn, LlmProvider } from "@h1deya/langchain-mcp-tools";
 import { initChatModel } from "./init-chat-model.js";
 import { loadConfig, Config } from "./load-config.js";
 import readline from "readline";
@@ -181,9 +181,11 @@ function addLogFileWatcher(logPath: string, serverName: string) {
 
 // Application initialization
 async function initializeReactAgent(config: Config, verbose: boolean, logDir: string) {
+  const llmProvider = config.llm.model_provider as LlmProvider;
+
   console.log("Initializing model...", config.llm, "\n");
   const llmConfig = {
-    modelProvider: config.llm.model_provider,
+    modelProvider: llmProvider,
     model: config.llm.model,
     temperature: config.llm.temperature,
     maxTokens: config.llm.max_tokens,
@@ -213,7 +215,7 @@ async function initializeReactAgent(config: Config, verbose: boolean, logDir: st
 
   const toolsAndCleanup = await convertMcpToLangchainTools(
     config.mcp_servers,
-    { logLevel: verbose ? "debug" : "info" }
+    { llmProvider, logLevel: verbose ? "debug" : "info" }
   );
   const tools = toolsAndCleanup.tools;
   const mcpCleanup = toolsAndCleanup.cleanup;
