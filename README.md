@@ -4,10 +4,17 @@
 **Quickly test and explore MCP servers from the command line!**
 
 A simple, text-based CLI client for [Model Context Protocol (MCP)](https://modelcontextprotocol.io/) servers built with LangChain and TypeScript.  
+This tool performs automatic schema adjustments for LLM compatibility.  
 Suitable for testing MCP servers, exploring their capabilities, and prototyping integrations.
 
 Internally it uses  [LangChain ReAct Agent](https://github.com/langchain-ai/react-agent-js) and
-a utility function `convertMcpToLangchainTools()` from [`@h1deya/langchain-mcp-tools`](https://www.npmjs.com/package/@h1deya/langchain-mcp-tools).
+a utility function `convertMcpToLangchainTools()` from
+[`@h1deya/langchain-mcp-tools`](https://www.npmjs.com/package/@h1deya/langchain-mcp-tools).  
+This function performs the aforementioned MCP tools schema transformations for LLM compatibility.
+See [this page](https://github.com/hideya/langchain-mcp-tools-ts/blob/main/README.md#llm-provider-schema-compatibility)
+for details.
+
+A Python equivalent of this utility is available [here](https://pypi.org/project/mcp-chat/)
 
 ## Prerequisites
 
@@ -18,7 +25,7 @@ a utility function `convertMcpToLangchainTools()` from [`@h1deya/langchain-mcp-t
   [OpenAI](https://platform.openai.com/api-keys),
   [Anthropic](https://console.anthropic.com/settings/keys),
   and/or
-  [Google GenAI](https://aistudio.google.com/apikey)
+  [Google AI Studio (for GenAI/Gemini)](https://aistudio.google.com/apikey)
   as needed
 
 ## Quick Start
@@ -43,7 +50,7 @@ a utility function `convertMcpToLangchainTools()` from [`@h1deya/langchain-mcp-t
       // "model_provider": "anthropic",
       // "model": "claude-3-5-haiku-latest",
       // "model_provider": "google_genai",
-      // "model": "gemini-2.0-flash",
+      // "model": "gemini-2.5-flash",
     },
 
     "mcp_servers": {
@@ -128,9 +135,9 @@ mcp-try-cli --help
 
 ## Supported LLM Providers
 
-- **OpenAI**: `gpt-4o`, `gpt-4o-mini`, etc.
+- **OpenAI**: `o4-mini`, `gpt-4o-mini`, etc.
 - **Anthropic**: `claude-sonnet-4-0`, `claude-3-5-haiku-latest`, etc.
-- **Google (GenAI)**: `gemini-2.0-flash`, `gemini-1.5-pro`, etc.
+- **Google (GenAI)**: `gemini-2.5-pro`, `gemini-2.5-flash`, etc.
 
 ## Configuration
 
@@ -153,7 +160,7 @@ Create a `llm_mcp_config.json5` file:
 {
   "llm": {
     "model_provider": "openai",
-    "model": "gpt-4o-mini",
+    "model": "gpt-4.1-nano",
     // model: "o4-mini",
   },
   
@@ -165,8 +172,8 @@ Create a `llm_mcp_config.json5` file:
 
   // "llm": {
   //   "model_provider": "google_genai",
-  //   "model": "gemini-2.0-flash",
-  //   // "model": "gemini-2.5-pro-preview-06-05",
+  //   "model": "gemini-2.5-flash",
+  //   // "model": "gemini-2.5-pro",
   // }
 
   "example_queries": [
@@ -245,14 +252,6 @@ There are quite a few useful MCP servers already available:
 - Check the logs in your specified log directory
 - Use `--verbose` flag for detailed output
 - Refer to [MCP documentation](https://modelcontextprotocol.io/)
-
-## Development
-
-This tool is built with:
-- [Model Context Protocol (MCP)](https://modelcontextprotocol.io/)
-- [LangChain](https://langchain.com/) for LLM integration
-- [TypeScript](https://www.typescriptlang.org/) for type safety
-- [Yargs](https://yargs.js.org/) for CLI parsing
 
 ## License
 

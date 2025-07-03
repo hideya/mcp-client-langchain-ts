@@ -15,32 +15,33 @@
     //     // "max_tokens": 10000,
     // },
 
-    "llm": {
-        // https://platform.openai.com/docs/pricing
-        // https://platform.openai.com/settings/organization/billing/overview
-        "model_provider": "openai",
-        "model": "gpt-4o-mini",
-        // "model": "o4-mini",
-        // "temperature": 0.0,  //  'temperature' is not supported with "o4-mini"
-        // "max_completion_tokens": 10000,  //  Use 'max_completion_tokens' instead of 'max_tokens'
-    },
-
     // "llm": {
-    //     // https://ai.google.dev/gemini-api/docs/pricing
-    //     // https://console.cloud.google.com/billing
-    //     "model_provider": "google_genai",
-    //     "model": "gemini-2.0-flash",
-    //     // "model": "gemini-1.5-pro",
-    //     // "temperature": 0.0,
-    //     // "max_tokens": 10000,
+    //     // https://platform.openai.com/docs/pricing
+    //     // https://platform.openai.com/settings/organization/billing/overview
+    //     "model_provider": "openai",
+    //     "model": "gpt-4.1-nano",
+    //     // "model": "o4-mini",
+    //     // "temperature": 0.0,  //  'temperature' is not supported with "o4-mini"
+    //     // "max_completion_tokens": 10000,  //  Use 'max_completion_tokens' instead of 'max_tokens'
     // },
 
+    "llm": {
+        // https://ai.google.dev/gemini-api/docs/pricing
+        // https://console.cloud.google.com/billing
+        "model_provider": "google_genai",
+        "model": "gemini-2.5-flash",
+        // "model": "gemini-2.5-pro",
+        // "temperature": 0.0,
+        // "max_tokens": 10000,
+    },
+
     "example_queries": [
-        "Are there any weather alerts in California?",
         "Read the news headlines on bbc.com",
         "Read and briefly summarize the LICENSE file",
+        "Are there any weather alerts in California?",
+        // "What's the news from Tokyo today?",
         // "Open the webpage at bbc.com",
-        // "Search the web and get today's news related to tokyo",
+        // "Tell me about my Notion account",
     ],
 
     "mcp_servers": {
@@ -82,7 +83,7 @@
         // },
 
         // // Test SSE connection with the auto fallback
-        // // See the comments at the top of index.ts
+        // // See the comments at the top of src/index.ts
         // weather: {
         //     "url": "http://localhost:${SSE_SERVER_PORT}/sse"
         // },
@@ -111,6 +112,17 @@
         //     "command": "npx",
         //     "args": [ "-y", "@modelcontextprotocol/server-brave-search"],
         //     "env": { "BRAVE_API_KEY": "${BRAVE_API_KEY}" }
+        // },
+
+        // notion: {
+        //   "command": "npx",
+        //   "args": ["-y", "@notionhq/notion-mcp-server"],
+        //   "env": {
+        //     // Although the following implies that this MCP server is designed for
+        //     // OpenAI LLMs, it works fine with others models.
+        //     // Tested Claude and Gemini (with schema adjustments).
+        //     "OPENAPI_MCP_HEADERS": '{"Authorization": "Bearer ${NOTION_INTEGRATION_SECRET}", "Notion-Version": "2022-06-28"}'
+        //   },
         // },
     }
 }

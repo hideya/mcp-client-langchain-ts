@@ -60,7 +60,7 @@ For the convenience of debugging MCP servers, this client prints local (stdio) M
 
 LLMs from Anthropic, OpenAI and Google (GenAI) are currently supported.
 
-A python version of this MCP client is available
+A Python version of this MCP client is available
 [here](https://github.com/hideya/mcp-client-langchain-py)
 
 ## Prerequisites
