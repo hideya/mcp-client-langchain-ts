@@ -1,21 +1,21 @@
 {
-  "name": "@h1deya/mcp-try-cli",
+  "name": "@h1deya/mcp-client-cli",
   "version": "0.3.0",
-  "description": "Simple CLI MCP Client to quickly test and explore MCP servers from the command line",
+  "description": "Simple MCP Client to quickly test and explore MCP servers from the command line",
   "license": "MIT",
   "keywords": [
     "mcp",
-    "cli",
-    "try",
-    "test",
     "model-context-protocol",
+    "client",
+    "cli",
     "langchain",
     "tools",
     "typescript",
-    "client",
     "simple",
     "quick",
-    "explore"
+    "explore",
+    "try",
+    "test"
   ],
   "author": "hideya kawahara",
   "repository": {
@@ -26,7 +26,7 @@
     "url": "https://github.com/hideya/mcp-client-langchain-ts/issues"
   },
   "bin": {
-    "mcp-try-cli": "dist/index.js"
+    "mcp-client-cli": "dist/index.js"
   },
   "main": "./dist/index.js",
   "files": [

@@ -1,15 +1,15 @@
-# Simple CLI MCP Client to Explore MCP Servers / TypeScript [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/hideya/mcp-langchain-client-ts/blob/main/LICENSE) [![npm version](https://img.shields.io/npm/v/@h1deya/mcp-try-cli.svg)](https://www.npmjs.com/package/@h1deya/mcp-try-cli)
+# Simple MCP Client to Explore MCP Servers / TypeScript [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/hideya/mcp-langchain-client-ts/blob/main/LICENSE) [![npm version](https://img.shields.io/npm/v/@h1deya/mcp-client-cli.svg)](https://www.npmjs.com/package/@h1deya/mcp-client-cli)
 
 
 **Quickly test and explore MCP servers from the command line!**
 
 A simple, text-based CLI client for [Model Context Protocol (MCP)](https://modelcontextprotocol.io/) servers built with LangChain and TypeScript.  
-This tool performs automatic schema adjustments for LLM compatibility.  
+This tool automatically adjusts the schema for LLM compatibility, which can help some failing MCP servers run successfully.  
 Suitable for testing MCP servers, exploring their capabilities, and prototyping integrations.
 
 Internally it uses  [LangChain ReAct Agent](https://github.com/langchain-ai/react-agent-js) and
 a utility function `convertMcpToLangchainTools()` from
-[`@h1deya/langchain-mcp-tools`](https://www.npmjs.com/package/@h1deya/langchain-mcp-tools).  
+[`@h1deya/langchain-mcp-tools`](https://www.npmjs.com/package/@h1deya/langchain-mcp-tools).
 This function performs the aforementioned MCP tools schema transformations for LLM compatibility.
 See [this page](https://github.com/hideya/langchain-mcp-tools-ts/blob/main/README.md#llm-provider-schema-compatibility)
 for details.
@@ -30,10 +30,10 @@ A Python equivalent of this utility is available [here](https://pypi.org/project
 
 ## Quick Start
 
-- Install `mcp-try-cli` tool.
+- Install `mcp-client-cli` tool.
   This can take up to a few minutes to complete:
   ```bash
-  npm install -g @h1deya/mcp-try-cli
+  npm install -g @h1deya/mcp-client-cli
   ```
 
 - Configure LLM and MCP Servers settings via the configuration file, `llm_mcp_config.json5`
@@ -54,7 +54,7 @@ A Python equivalent of this utility is available [here](https://pypi.org/project
     },
 
     "mcp_servers": {
-      "weather": {
+      "us-weather": {  // US weather only
         "command": "npx", 
         "args": ["-y", "@h1deya/mcp-server-weather"]
       },
@@ -78,7 +78,7 @@ A Python equivalent of this utility is available [here](https://pypi.org/project
 
 - Run the tool
   ```bash
-  mcp-try-cli
+  mcp-client-cli
   ```
   By default, it reads the configuration file, `llm_mcp_config.json5`, from the current directory.  
   Then, it applies the environment variables specified in the `.env` file,
@@ -93,6 +93,9 @@ See [README_DEV.md](https://github.com/hideya/mcp-client-langchain-ts/blob/main/
 - **Easy setup**: Works out of the box with popular MCP servers
 - **Flexible configuration**: JSON5 config with environment variable support
 - **Multiple LLM providers**: OpenAI, Anthropic, Google (GenAI)
+- **Schema Compatibility Support**: Automatically adjusts tools schema for LLM compatibility, which can help some failing MCP servers run successfully. 
+  See [this page](https://github.com/hideya/langchain-mcp-tools-ts/blob/main/README.md#llm-provider-schema-compatibility)
+for details.
 - **Command & URL servers**: Support for both local and remote MCP servers
 - **Real-time logging**: Live stdio MCP server logs with customizable log directory
 - **Interactive testing**: Example queries for the convenience of repeated testing
@@ -109,7 +112,7 @@ While MCP tools can return multiple content types (text, images, etc.), this lib
 ### Basic Usage
 
 ```bash
-mcp-try-cli
+mcp-client-cli
 ```
 
 By default, it reads the configuration file, `llm_mcp_config.json5`, from the current directory.  
@@ -121,16 +124,16 @@ It outputs local MCP server logs to the current directory.
 
 ```bash
 # Specify the config file to use
-mcp-try-cli --config my-config.json5
+mcp-client-cli --config my-config.json5
 
 # Store local (stdio) MCP server logs in specific directory
-mcp-try-cli --log-dir ./logs
+mcp-client-cli --log-dir ./logs
 
 # Enable verbose logging
-mcp-try-cli --verbose
+mcp-client-cli --verbose
 
 # Show help
-mcp-try-cli --help
+mcp-client-cli --help
 ```
 
 ## Supported LLM Providers
@@ -241,17 +244,10 @@ There are quite a few useful MCP servers already available:
 
 ## Troubleshooting
 
-### Common Issues
-
-1. **Missing API key**: Make sure your `.env` file contains the required API key
-2. **Server not found**: Ensure MCP server packages are available via npx
-3. **Permission errors**: Check file permissions for log directory
-
-### Getting Help
-
-- Check the logs in your specified log directory
-- Use `--verbose` flag for detailed output
-- Refer to [MCP documentation](https://modelcontextprotocol.io/)
+- Make sure your configuration and .env files are correct, especially the spelling of the API keys
+- Check the local MCP server logs
+- Use `--verbose` flag to view the detailed logs
+- Refer to [Debugging Section in MCP documentation](https://modelcontextprotocol.io/docs/tools/debugging)
 
 ## License
 
