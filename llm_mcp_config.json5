@@ -64,7 +64,7 @@
         },
 
         // https://github.com/modelcontextprotocol/quickstart-resources/tree/main/weather-server-python
-        "weather": {
+        "us-weather": {  // US weather only
             "command": "npx",
             "args": [
                 "-y",
@@ -84,7 +84,7 @@
 
         // // Test SSE connection with the auto fallback
         // // See the comments at the top of src/index.ts
-        // weather: {
+        // us-weather: {
         //     "url": "http://localhost:${SSE_SERVER_PORT}/sse"
         // },
 
