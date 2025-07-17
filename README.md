@@ -1,3 +1,5 @@
+[![MseeP.ai Security Assessment Badge](https://mseep.net/pr/hideya-mcp-client-langchain-ts-badge.png)](https://mseep.ai/app/hideya-mcp-client-langchain-ts)
+
 # Simple MCP Client to Explore MCP Servers / TypeScript [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/hideya/mcp-langchain-client-ts/blob/main/LICENSE) [![npm version](https://img.shields.io/npm/v/@h1deya/mcp-client-cli.svg)](https://www.npmjs.com/package/@h1deya/mcp-client-cli)
 
 
