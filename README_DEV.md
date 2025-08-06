@@ -13,7 +13,7 @@ When testing LLM and MCP servers, their settings can be conveniently configured 
         // "model_provider": "anthropic",
         // "model": "claude-3-5-haiku-latest",
         // "model_provider": "google_genai",
-        // "model": "gemini-2.0-flash",
+        // "model": "gemini-2.5-flash",
     },
 
     "mcp_servers": {
@@ -69,12 +69,15 @@ A Python version of this MCP client is available
 - npm 7+ (`npx`) to run Node.js-based MCP servers
 - [optional] [`uv` (`uvx`)](https://docs.astral.sh/uv/getting-started/installation/)
   installed to run Python-based MCP servers
-- API keys from [Anthropic](https://console.anthropic.com/settings/keys),
-  [OpenAI](https://platform.openai.com/api-keys), and/or
-  [Google GenAI](https://aistudio.google.com/apikey)
-  as needed.
+- LLM API keys from
+  [OpenAI](https://platform.openai.com/api-keys),
+  [Anthropic](https://console.anthropic.com/settings/keys),
+  and/or
+  [Google AI Studio (for GenAI/Gemini)](https://aistudio.google.com/apikey)
+  as needed
 
 ## Setup
+
 1. Clone the repository:
     ```bash
     git clone https://github.com/hideya/mcp-client-langchain-ts.git
@@ -126,3 +129,7 @@ See commandline options:
 ```bash
 npm run start:h
 ```
+
+At the prompt, you can simply press Enter to use example queries that perform MCP server tool invocations.
+
+Example queries can be configured in  `llm_mcp_config.json5`

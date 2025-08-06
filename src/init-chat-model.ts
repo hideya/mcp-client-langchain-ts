@@ -1,6 +1,7 @@
 import { ChatAnthropic } from '@langchain/anthropic';
 import { ChatOpenAI } from '@langchain/openai';
 import { ChatGoogleGenerativeAI } from "@langchain/google-genai";
+import { ChatXAI } from "@langchain/xai";
 import { BaseChatModel, BindToolsInput } from '@langchain/core/language_models/chat_models';
 
 // FIXME: no typescript version of init_chat_model()?
@@ -30,7 +31,12 @@ export function initChatModel(config: ChatModelConfig): BaseChatModel {
         break;
 
       case 'google_genai':
+      case 'google_gemini':
         model = new ChatGoogleGenerativeAI(llmConfig);
+        break;
+      
+      case 'xai':
+        model = new ChatXAI(llmConfig);
         break;
 
       default:
