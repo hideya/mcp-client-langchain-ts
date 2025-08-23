@@ -1,5 +1,5 @@
-import * as child_process from 'child_process';
-import * as net from 'net';
+import * as child_process from "child_process";
+import * as net from "net";
 
 // NOTE: Hard-coded dependency on the Supergateway message
 // to easily identify the end of initialization.
@@ -13,7 +13,7 @@ export async function findFreePort(): Promise<number> {
   return new Promise((resolve, reject) => {
     const server = net.createServer();
     server.unref();
-    server.on('error', reject);
+    server.on("error", reject);
     server.listen(0, () => {
       const port = (server.address() as net.AddressInfo).port;
       server.close(() => {
@@ -29,7 +29,7 @@ export async function findFreePort(): Promise<number> {
  * and is used here to run local SSE/WS servers for connection testing.
  * Ref: https://github.com/supercorp-ai/supergateway
  *
- * @param transportType - The transport type, either 'SSE' or 'WS'
+ * @param transportType - The transport type, either "SSE" or "WS"
  * @param mcpServerRunCommand - The command to run the MCP server
  * @returns A Promise resolving to [serverProcess, serverPort]
  */
@@ -50,13 +50,13 @@ export async function startRemoteMcpServerLocally(
   ];
 
   // Add transport-specific arguments
-  if (transportType.toLowerCase() === 'sse') {
+  if (transportType.toLowerCase() === "sse") {
     command.push(
       "--baseUrl", `http://localhost:${serverPort}`,
       "--ssePath", "/sse",
       "--messagePath", "/message"
     );
-  } else if (transportType.toLowerCase() === 'ws') {
+  } else if (transportType.toLowerCase() === "ws") {
     command.push(
       "--outputTransport", "ws",
       "--messagePath", "/message"
@@ -70,7 +70,7 @@ export async function startRemoteMcpServerLocally(
     command[0],
     command.slice(1),
     {
-      stdio: ['ignore', 'pipe', 'pipe'],
+      stdio: ["ignore", "pipe", "pipe"],
     }
   );
 
@@ -84,7 +84,7 @@ export async function startRemoteMcpServerLocally(
     }, 30000);
     
     // Listen for the specific log message that indicates server is ready
-    serverProcess.stdout?.on('data', (data) => {
+    serverProcess.stdout?.on("data", (data) => {
       const output = data.toString();
       console.log(output); // Still log the output to console
 
@@ -96,16 +96,16 @@ export async function startRemoteMcpServerLocally(
     });
 
     // Handle errors
-    serverProcess.stderr?.on('data', (data) => {
+    serverProcess.stderr?.on("data", (data) => {
       console.error(`Server error: ${data}`);
     });
 
-    serverProcess.on('error', (err) => {
+    serverProcess.on("error", (err) => {
       clearTimeout(timeoutId);
       reject(new Error(`Failed to start server: ${err.message}`));
     });
 
-    serverProcess.on('exit', (code) => {
+    serverProcess.on("exit", (code) => {
       if (code !== 0 && code !== null) {
         clearTimeout(timeoutId);
         reject(new Error(`Server process exited with code ${code}`));

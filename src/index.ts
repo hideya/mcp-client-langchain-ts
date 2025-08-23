@@ -181,7 +181,7 @@ function addLogFileWatcher(logPath: string, serverName: string) {
 
 // Application initialization
 async function initializeReactAgent(config: Config, verbose: boolean, logDir: string) {
-  const llmProvider = config.llm.model_provider as LlmProvider;
+  const llmProvider = config.llm.provider as LlmProvider;
 
   console.log("Initializing model...", config.llm, "\n");
   const llmConfig = {

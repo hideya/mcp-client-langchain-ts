@@ -25,8 +25,10 @@ A Python equivalent of this utility is available [here](https://pypi.org/project
   [OpenAI](https://platform.openai.com/api-keys),
   [Anthropic](https://console.anthropic.com/settings/keys),
   [Google AI Studio (for GenAI/Gemini)](https://aistudio.google.com/apikey),
-  and/or
   [xAI](https://console.x.ai/),
+  [Cerebras](https://cloud.cerebras.ai),
+  and/or
+  [Groq](https://console.groq.com/keys),
   as needed
 
 ## Quick Start
@@ -46,14 +48,12 @@ A Python equivalent of this utility is available [here](https://pypi.org/project
   ```json5
   {
     "llm": {
-      "model_provider": "openai",
-      "model": "gpt-4o-mini",
-      // "model_provider": "anthropic",
-      // "model": "claude-3-5-haiku-latest",
-      // "model_provider": "google_genai",
-      // "model": "gemini-2.5-flash",
-      // "model_provider": "xai",
-      // "model": "grok-3-mini",
+      "provider": "openai",       "model": "gpt-5-mini",
+      // "provider": "anthropic",    "model": "claude-3-5-haiku-latest",
+      // "provider": "google_genai", "model": "gemini-2.5-flash",
+      // "provider": "xai",          "model": "grok-3-mini",
+      // "provider": "cerebras",     "model": "gpt-oss-120b",
+      // "provider": "groq",         "model": "openai/gpt-oss-20b",
     },
 
     "mcp_servers": {
@@ -75,7 +75,9 @@ A Python equivalent of this utility is available [here](https://pypi.org/project
   echo "ANTHROPIC_API_KEY=sk-ant-...                                       
   OPENAI_API_KEY=sk-proj-...
   GOOGLE_API_KEY=AI...
-  XAI_API_KEY=xai-..." > .env
+  XAI_API_KEY=xai-...
+  CEREBRAS_API_KEY=csk-...
+  GROQ_API_KEY=gsk_..." > .env
   
   code .env
   ```
@@ -142,9 +144,12 @@ mcp-client-cli --help
 
 ## Supported LLM Providers
 
-- **OpenAI**: `o4-mini`, `gpt-4o-mini`, etc.
+- **OpenAI**: `gpt-5-mini`, `gpt-4.1-nano`, etc.
 - **Anthropic**: `claude-sonnet-4-0`, `claude-3-5-haiku-latest`, etc.
-- **Google (GenAI)**: `gemini-2.5-pro`, `gemini-2.5-flash`, etc.
+- **Google (GenAI)**: `gemini-2.5-flash`, `gemini-2.5-pro`, etc.
+- **xAI**: `grok-3-mini`, `grok-4`, etc.
+- **Cerebras**: `gpt-oss-120b`, etc.
+- **Groq**: `openai/gpt-oss-20b`, `openai/gpt-oss-120b`, etc.
 
 ## Configuration
 
@@ -166,27 +171,38 @@ Create a `llm_mcp_config.json5` file:
 ```json5
 {
   "llm": {
-    "model_provider": "openai",
-    "model": "gpt-4o-mini",
-    // model: "o4-mini",
+    "provider": "openai",
+    "model": "gpt-4.1-nano",
+    // model: "gpt-5-mini",
   },
   
   // "llm": {
-  //   "model_provider": "anthropic",
+  //   "provider": "anthropic",
   //   "model": "claude-3-5-haiku-latest",
   //   // "model": "claude-sonnet-4-0",
   // },
 
   // "llm": {
-  //   "model_provider": "google_genai",
+  //   "provider": "google_genai",
   //   "model": "gemini-2.5-flash",
   //   // "model": "gemini-2.5-pro",
   // },
 
   // "llm": {
-  //   "model_provider": "xai",
+  //   "provider": "xai",
   //   "model": "grok-3-mini",
   //   // "model": "grok-4",
+  // },
+
+  // "llm": {
+  //   "provider": "cerebras",
+  //   "model": "gpt-oss-120b",
+  // },
+
+  // "llm": {
+  //   "provider": "groq",
+  //   "model": "openai/gpt-oss-20b",
+  //   // "model": "openai/gpt-oss-120b",
   // },
 
   "example_queries": [
@@ -240,6 +256,8 @@ Create a `.env` file for API keys:
 OPENAI_API_KEY=sk-ant-...
 ANTHROPIC_API_KEY=sk-proj-...
 GOOGLE_API_KEY=AI...
+CEREBRAS_API_KEY=csk-...
+GROQ_API_KEY=gsk_...
 
 # Other services as needed
 GITHUB_PERSONAL_ACCESS_TOKEN=github_pat_...
@@ -258,6 +276,10 @@ There are quite a few useful MCP servers already available:
 - Check the local MCP server logs
 - Use `--verbose` flag to view the detailed logs
 - Refer to [Debugging Section in MCP documentation](https://modelcontextprotocol.io/docs/tools/debugging)
+
+## Change Log
+
+Can be found [here](https://github.com/hideya/mcp-client-langchain-ts/blob/main/CHANGELOG.md)
 
 ## License
 

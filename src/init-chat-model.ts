@@ -1,8 +1,10 @@
-import { ChatAnthropic } from '@langchain/anthropic';
-import { ChatOpenAI } from '@langchain/openai';
+import { ChatAnthropic } from "@langchain/anthropic";
+import { ChatCerebras } from "@langchain/cerebras";
 import { ChatGoogleGenerativeAI } from "@langchain/google-genai";
+import { ChatGroq } from "@langchain/groq";
+import { ChatOpenAI } from "@langchain/openai";
 import { ChatXAI } from "@langchain/xai";
-import { BaseChatModel, BindToolsInput } from '@langchain/core/language_models/chat_models';
+import { BaseChatModel, BindToolsInput } from "@langchain/core/language_models/chat_models";
 
 // FIXME: no typescript version of init_chat_model()?
 // Ref: https://python.langchain.com/api_reference/langchain/chat_models/langchain.chat_models.base.init_chat_model.html
@@ -22,30 +24,38 @@ export function initChatModel(config: ChatModelConfig): BaseChatModel {
 
   try {
     switch (modelProvider.toLowerCase()) {
-      case 'openai':
+      case "openai":
         model = new ChatOpenAI(llmConfig);
         break;
 
-      case 'anthropic':
+      case "anthropic":
         model = new ChatAnthropic(llmConfig);
         break;
 
-      case 'google_genai':
-      case 'google_gemini':
+      case "google_genai":
+      case "google_gemini":
         model = new ChatGoogleGenerativeAI(llmConfig);
         break;
       
-      case 'xai':
+      case "xai":
         model = new ChatXAI(llmConfig);
+        break;
+      
+      case "cerebras":
+        model = new ChatCerebras(llmConfig);
+        break;
+      
+      case "groq":
+        model = new ChatGroq(llmConfig);
         break;
 
       default:
         throw new Error(
-          `Unsupported model_provider: ${modelProvider}`,
+          `Unsupported LLM provider: ${modelProvider}`,
         );
     }
 
-    if (typeof model?.bindTools === 'function') {
+    if (typeof model?.bindTools === "function") {
       if (tools && tools.length > 0) {
         // FIXME
         // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
@@ -53,12 +63,12 @@ export function initChatModel(config: ChatModelConfig): BaseChatModel {
       }
     } else {
       throw new Error(
-        `Tool calling unsupported by model_provider: ${modelProvider}`,
+        `Tool calling unsupported by model: ${modelProvider}`,
       );
     }
 
     return model;
   } catch (error) {
-    throw new Error(`Failed to initialize chat model: ${error instanceof Error ? error.message : 'Unknown error'}`);
+    throw new Error(`Failed to initialize chat model: ${error instanceof Error ? error.message : "Unknown error"}`);
   }
 }
