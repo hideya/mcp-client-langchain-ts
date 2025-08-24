@@ -160,7 +160,6 @@ function addLogFileWatcher(logPath: string, serverName: string) {
 
   const watcher = fs.watch(logPath, (eventType: string, filename: unknown) => {
     if (eventType === 'change') {
-      // console.log(`*** file updated: "${filename}"`);
       const stats = fs.statSync(logPath);
       const currentSize = stats.size;
       if (currentSize > lastSize) {
@@ -181,11 +180,11 @@ function addLogFileWatcher(logPath: string, serverName: string) {
 
 // Application initialization
 async function initializeReactAgent(config: Config, verbose: boolean, logDir: string) {
-  const llmProvider = config.llm.provider as LlmProvider;
+  const llmApiProvider = config.llm.provider as LlmProvider;
 
   console.log("Initializing model...", config.llm, "\n");
   const llmConfig = {
-    modelProvider: llmProvider,
+    modelProvider: llmApiProvider,
     model: config.llm.model,
     temperature: config.llm.temperature,
     maxTokens: config.llm.max_tokens,
@@ -212,6 +211,14 @@ async function initializeReactAgent(config: Config, verbose: boolean, logDir: st
       openedLogFiles[logPath] = { fd: logFd, watcher };
     }
   });
+
+  const schemaTransformations = 
+    (config.schema_transformations === undefined) || config.schema_transformations;
+
+  const llmProvider = schemaTransformations && (llmApiProvider === "openai" || 
+    llmApiProvider === "google_gemini" ||  llmApiProvider === "google_genai" ||
+    llmApiProvider === "anthropic" ||  llmApiProvider === "xai")
+    ? llmApiProvider : "none" as LlmProvider;
 
   const toolsAndCleanup = await convertMcpToLangchainTools(
     config.mcp_servers,

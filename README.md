@@ -101,7 +101,8 @@ See [README_DEV.md](https://github.com/hideya/mcp-client-langchain-ts/blob/main/
 - **Multiple LLM providers**: OpenAI, Anthropic, Google (GenAI)
 - **Schema Compatibility Support**: Automatically adjusts tools schema for LLM compatibility, which can help some failing MCP servers run successfully. 
   See [this page](https://github.com/hideya/langchain-mcp-tools-ts/blob/main/README.md#llm-provider-schema-compatibility)
-for details.
+for details.  
+If you want to disable the schema trnaformations, add `"schema_transformations": false,` to the top level of the config file.
 - **Command & URL servers**: Support for both local and remote MCP servers
 - **Real-time logging**: Live stdio MCP server logs with customizable log directory
 - **Interactive testing**: Example queries for the convenience of repeated testing
@@ -243,6 +244,12 @@ Create a `llm_mcp_config.json5` file:
       "headers": {
         "Authorization": "Bearer ${GITHUB_PERSONAL_ACCESS_TOKEN}"
       }
+    },
+
+    // To connect a remote MCP server with OAuth, use "mcp-remote"
+    "notionMCP": {
+      "command": "npx",
+      "args": ["-y", "mcp-remote", "https://mcp.notion.com/mcp"],
     }
   }
 }

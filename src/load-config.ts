@@ -39,6 +39,7 @@ export interface Config {
   mcp_servers: {
     [key: string]: MCPServerConfig;
   }
+  schema_transformations?: boolean; 
 }
 
 export function loadConfig(path: string): Config {
@@ -61,6 +62,7 @@ export function loadConfig(path: string): Config {
       delete config.llm.model_provider;
     }
     console.log(config);
+    console.log(config.schema_transformations);
 
     // Validate required fields
     validateConfig(config);
@@ -107,6 +109,12 @@ function validateConfig(config: unknown): asserts config is Config {
       throw new Error(`Invalid configuration for MCP server "${key}": ${error instanceof Error ? error.message : String(error)}`);
     }
   });
+
+  if ("schema_transformations" in config) {
+    if (typeof config.schema_transformations !== "boolean") {
+      throw new Error("schema_transformations must be a boolean if provided");
+    }
+  }
 }
 
 function validateLLMConfig(llmConfig: unknown): asserts llmConfig is LLMConfig {

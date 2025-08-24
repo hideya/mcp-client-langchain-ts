@@ -5,6 +5,8 @@
 // Keep all the credentials and private into the `.env` file
 // and refer to them with `${...}` notation as needed.
 {
+    // "schema_transformations": false,
+
     // "llm": {
     //     // https://docs.anthropic.com/en/docs/about-claude/pricing
     //     // https://console.anthropic.com/settings/billing
@@ -19,8 +21,8 @@
     //     // https://platform.openai.com/docs/pricing
     //     // https://platform.openai.com/settings/organization/billing/overview
     //     "provider": "openai",
-    //     "model": "gpt-4.1-nano",
-    //     // "model": "gpt-5-mini",
+    //     // "model": "gpt-4.1-nano",
+    //     "model": "gpt-5-mini",
     //     // "temperature": 0.0,  //  'temperature' is not supported with "o4-mini"
     //     // "max_completion_tokens": 10000,  //  Use 'max_completion_tokens' instead of 'max_tokens'
     // },
@@ -61,6 +63,7 @@
         "Are there any weather alerts in California?",
         // "What's the news from Tokyo today?",
         // "Open the webpage at bbc.com",
+        // "Tell me how many github repositories I have?"
         // "Tell me about my Notion account",
     ],
 
@@ -118,8 +121,6 @@
         //     "Authorization": "Bearer ${GITHUB_PERSONAL_ACCESS_TOKEN}"
         //   }
         // },
-        // // NOTE: When accessing the GitHub MCP server, [GitHub PAT (Personal Access Token)](https://github.com/settings/personal-access-tokens)
-        // // alone is not enough; your GitHub account must have an active Copilot subscription or be assigned a Copilot license through your organization.
 
         // // https://github.com/microsoft/playwright-mcp
         // "playwright": {
@@ -134,15 +135,23 @@
         //     "env": { "BRAVE_API_KEY": "${BRAVE_API_KEY}" }
         // },
 
-        // notion: {
-        //   "command": "npx",
-        //   "args": ["-y", "@notionhq/notion-mcp-server"],
-        //   "env": {
-        //     // Although the following implies that this MCP server is designed for
-        //     // OpenAI LLMs, it works fine with others models.
-        //     // Tested with Claude and Gemini (with schema adjustments).
-        //     "OPENAPI_MCP_HEADERS": '{"Authorization": "Bearer ${NOTION_INTEGRATION_SECRET}", "Notion-Version": "2022-06-28"}'
-        //   },
+        // The following Notion local MCP server is not recommended anymore?
+        // Refs:
+        // - https://developers.notion.com/docs/get-started-with-mcp
+        // - https://www.npmjs.com/package/@notionhq/notion-mcp-server
+        // 
+        // "notionApi": {
+        //     "command": "npx",
+        //     "args": ["-y", "@notionhq/notion-mcp-server"],
+        //     "env": {
+        //         "NOTION_TOKEN": "${NOTION_INTEGRATION_SECRET}"
+        //     }
         // },
+
+        // Run Notion remote MCP server via mcp-remote
+        // "notionMCP": {
+        //     "command": "npx",
+        //     "args": ["-y", "mcp-remote", "https://mcp.notion.com/mcp"],
+        // }
     }
 }
