@@ -212,8 +212,7 @@ async function initializeReactAgent(config: Config, verbose: boolean, logDir: st
     }
   });
 
-  const schemaTransformations = 
-    (config.schema_transformations === undefined) || config.schema_transformations;
+  const schemaTransformations = config.schema_transformations ?? true;
 
   const llmProvider = schemaTransformations && (llmApiProvider === "openai" || 
     llmApiProvider === "google_gemini" ||  llmApiProvider === "google_genai" ||

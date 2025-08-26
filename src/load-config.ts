@@ -61,8 +61,6 @@ export function loadConfig(path: string): Config {
       config.llm.provider = config.llm.model_provider;
       delete config.llm.model_provider;
     }
-    console.log(config);
-    console.log(config.schema_transformations);
 
     // Validate required fields
     validateConfig(config);

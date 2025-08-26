@@ -48,12 +48,12 @@ A Python equivalent of this utility is available [here](https://pypi.org/project
   ```json5
   {
     "llm": {
-      "provider": "openai",       "model": "gpt-5-mini",
-      // "provider": "anthropic",    "model": "claude-3-5-haiku-latest",
-      // "provider": "google_genai", "model": "gemini-2.5-flash",
-      // "provider": "xai",          "model": "grok-3-mini",
-      // "provider": "cerebras",     "model": "gpt-oss-120b",
-      // "provider": "groq",         "model": "openai/gpt-oss-20b",
+      "provider": "openai",       "model": "gpt-5-mini"
+      // "provider": "anthropic",    "model": "claude-3-5-haiku-latest"
+      // "provider": "google_genai", "model": "gemini-2.5-flash"
+      // "provider": "xai",          "model": "grok-3-mini"
+      // "provider": "cerebras",     "model": "gpt-oss-120b"
+      // "provider": "groq",         "model": "openai/gpt-oss-20b"
     },
 
     "mcp_servers": {
@@ -103,7 +103,8 @@ See [README_DEV.md](https://github.com/hideya/mcp-client-langchain-ts/blob/main/
   See [this page](https://github.com/hideya/langchain-mcp-tools-ts/blob/main/README.md#llm-provider-schema-compatibility)
 for details.  
 If you want to disable the schema trnaformations, add `"schema_transformations": false,` to the top level of the config file.
-- **Command & URL servers**: Support for both local and remote MCP servers
+- **Command & URL servers**: Support for both local and remote MCP servers.  
+  Use `mcp-remote` to connect to remote servers with OAuth (see the end of the configuration example below).
 - **Real-time logging**: Live stdio MCP server logs with customizable log directory
 - **Interactive testing**: Example queries for the convenience of repeated testing
 
@@ -172,44 +173,28 @@ Create a `llm_mcp_config.json5` file:
 ```json5
 {
   "llm": {
-    "provider": "openai",
-    "model": "gpt-4.1-nano",
-    // model: "gpt-5-mini",
+    "provider": "openai",       "model": "gpt-5-mini",
+    // "provider": "anthropic",    "model": "claude-3-5-haiku-latest",
+    // "provider": "google_genai", "model": "gemini-2.5-flash",
+    // "provider": "xai",          "model": "grok-3-mini",
+    // "provider": "cerebras",     "model": "gpt-oss-120b",
+    // "provider": "groq",         "model": "openai/gpt-oss-20b",
   },
-  
-  // "llm": {
-  //   "provider": "anthropic",
-  //   "model": "claude-3-5-haiku-latest",
-  //   // "model": "claude-sonnet-4-0",
-  // },
 
-  // "llm": {
-  //   "provider": "google_genai",
-  //   "model": "gemini-2.5-flash",
-  //   // "model": "gemini-2.5-pro",
-  // },
-
-  // "llm": {
-  //   "provider": "xai",
-  //   "model": "grok-3-mini",
-  //   // "model": "grok-4",
-  // },
-
-  // "llm": {
-  //   "provider": "cerebras",
-  //   "model": "gpt-oss-120b",
-  // },
-
-  // "llm": {
-  //   "provider": "groq",
-  //   "model": "openai/gpt-oss-20b",
-  //   // "model": "openai/gpt-oss-120b",
-  // },
+  // To disable the automatic schema transformations, uncomment the following line.
+  // See this for details about the schema transformations:
+  //   https://github.com/hideya/langchain-mcp-tools-ts/blob/main/README.md#llm-provider-schema-compatibility
+  // 
+  // "schema_transformations": false,
 
   "example_queries": [
     "Tell me how LLMs work in a few sentences",
     "Are there any weather alerts in California?",
     "Read the news headlines on bbc.com",
+    // "Tell me about my GitHub profile"",
+    // "What's the news from Tokyo today?",
+    // "Open the webpage at bbc.com",
+    // "Tell me about my Notion account",
   ],
 
   "mcp_servers": {

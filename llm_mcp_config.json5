@@ -58,12 +58,12 @@
     // },
 
     "example_queries": [
-        "Read the news headlines on bbc.com",
-        "Read and briefly summarize the LICENSE file",
-        "Are there any weather alerts in California?",
+        "Summarize the beginning of the news headlines on BBC.com",
+        // "Read and briefly summarize the LICENSE file",
+        // "Are there any weather alerts in California?",
         // "What's the news from Tokyo today?",
         // "Open the webpage at bbc.com",
-        // "Tell me how many github repositories I have?"
+        // "Tell me about my GitHub profile",
         // "Tell me about my Notion account",
     ],
 
@@ -116,7 +116,7 @@
         // "github": {
         //   // To avoid auto protocol fallback, specify the protocol explicitly when using authentication
         //   "type": "http",  // or `transport: "http",`
-        //   "url": "https://api.githubcopilot.com/mcp/",
+        //   "url": "https://api.githubcopilot.com/mcp",
         //   "headers": {
         //     "Authorization": "Bearer ${GITHUB_PERSONAL_ACCESS_TOKEN}"
         //   }
@@ -148,7 +148,7 @@
         //     }
         // },
 
-        // Run Notion remote MCP server via mcp-remote
+        // // Run Notion remote MCP server via mcp-remote
         // "notionMCP": {
         //     "command": "npx",
         //     "args": ["-y", "mcp-remote", "https://mcp.notion.com/mcp"],
