@@ -232,7 +232,7 @@ Create a `llm_mcp_config.json5` file:
     },
 
     // To connect a remote MCP server with OAuth, use "mcp-remote"
-    "notionMCP": {
+    "notion": {
       "command": "npx",
       "args": ["-y", "mcp-remote", "https://mcp.notion.com/mcp"],
     }

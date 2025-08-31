@@ -12,6 +12,7 @@ import yargs from "yargs";
 import { hideBin } from "yargs/helpers";
 import * as fs from "fs";
 import * as path from "path";
+import { fileURLToPath } from "url";
 
 // NOTE: without the following, I got this error:
 //   ReferenceError: WebSocket is not defined
@@ -38,6 +39,23 @@ const COLORS = {
   RESET: "\x1b[0m"
 } as const;
 
+// Version helper function
+const getPackageVersion = (): string => {
+  try {
+    // Get the directory of the current module
+    const __filename = fileURLToPath(import.meta.url);
+    const __dirname = path.dirname(__filename);
+
+    // Read package.json from the project root
+    const packageJsonPath = path.join(__dirname, "..", "package.json");
+    const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, "utf-8"));
+    return packageJson.version || "unknown";
+  } catch (error) {
+    console.warn("Could not read version from package.json:", error);
+    return "unknown";
+  }
+};
+
 // CLI argument setup
 interface Arguments {
   config: string;
@@ -48,6 +66,7 @@ interface Arguments {
 
 const parseArguments = (): Arguments => {
   return yargs(hideBin(process.argv))
+    .version(getPackageVersion())
     .options({
       config: {
         type: "string",
