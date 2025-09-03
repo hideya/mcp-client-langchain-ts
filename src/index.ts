@@ -141,7 +141,7 @@ async function handleConversation(
 ): Promise<void> {
   console.log("\nConversation started. Type 'quit' or 'q to end the conversation.\n");
   if (remainingQueries && remainingQueries.length > 0) {
-    console.log("Exaample Queries (just type Enter to supply them one by one):");
+    console.log("Example Queries (just type Enter to supply them one by one):");
     remainingQueries.forEach(query => console.log(`- ${query}`));
     console.log();
   }

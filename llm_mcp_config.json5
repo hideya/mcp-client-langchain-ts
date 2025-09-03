@@ -31,8 +31,9 @@
         // https://ai.google.dev/gemini-api/docs/pricing
         // https://console.cloud.google.com/billing
         "provider": "google_genai",
-        "model": "gemini-2.5-flash",
+        // "model": "gemini-2.5-flash",
         // "model": "gemini-2.5-pro",
+        "model": "gemini-1.5-pro",
         // "temperature": 0.0,
         // "max_tokens": 10000,
     },
@@ -65,6 +66,7 @@
         // "Open the webpage at bbc.com",
         // "Tell me about my GitHub profile",
         // "Tell me about my Notion account",
+        // "Tell me about my Airtable account",
     ],
 
     "mcp_servers": {
@@ -145,6 +147,14 @@
         //     "args": ["-y", "@notionhq/notion-mcp-server"],
         //     "env": {
         //         "NOTION_TOKEN": "${NOTION_INTEGRATION_SECRET}"
+        //     }
+        // },
+
+        // "airtable": {
+        //     "command": "npx",
+        //     "args": ["-y", "airtable-mcp-server"],
+        //     "env": {
+        //         "AIRTABLE_API_KEY": "${AIRTABLE_API_KEY}",
         //     }
         // },
 
