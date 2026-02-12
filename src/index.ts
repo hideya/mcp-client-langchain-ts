@@ -1,9 +1,7 @@
 #!/usr/bin/env node
 
 import "dotenv/config";
-import { createReactAgent } from "@langchain/langgraph/prebuilt";
-import { MemorySaver } from "@langchain/langgraph";
-import { HumanMessage } from "@langchain/core/messages";
+import { createAgent, HumanMessage } from "langchain";
 import { convertMcpToLangchainTools, McpServerCleanupFn, LlmProvider } from "@h1deya/langchain-mcp-tools";
 import { initChatModel } from "./init-chat-model.js";
 import { loadConfig, Config } from "./load-config.js";
@@ -14,22 +12,6 @@ import * as fs from "fs";
 import * as path from "path";
 import { fileURLToPath } from "url";
 
-// NOTE: without the following, I got this error:
-//   ReferenceError: WebSocket is not defined
-//     at <anonymous> (.../node_modules/@modelcontextprotocol/sdk/src/client/websocket.ts:29:26)
-import WebSocket from 'ws';
-global.WebSocket = WebSocket as any;
-
-// // Remote server connection testing
-// // Uncomment the following code snippet and add the configuration below to the configuration file.
-// //        weather: {
-// //            "url": "http://localhost:${SSE_SERVER_PORT}/sse"
-// //        },
-// // This leverages the Supergateway to make the Weather Studio MCP Server accessible as an SSE server.
-// import { startRemoteMcpServerLocally } from "./remote-server-utils.js";
-// const [sseServerProcess, sseServerPort] = await startRemoteMcpServerLocally(
-//   "SSE",  "npx -y @h1deya/mcp-server-weather");
-// process.env.SSE_SERVER_PORT = `${sseServerPort}`;
 
 // Constants
 const COLORS = {
@@ -136,7 +118,7 @@ async function getUserQuery(
 
 // Conversation loop
 async function handleConversation(
-  agent: ReturnType<typeof createReactAgent>,
+  agent: ReturnType<typeof createAgent>,
   remainingQueries: string[]
 ): Promise<void> {
   console.log("\nConversation started. Type 'quit' or 'q to end the conversation.\n");
@@ -208,7 +190,7 @@ async function initializeReactAgent(config: Config, verbose: boolean, logDir: st
     temperature: config.llm.temperature,
     maxTokens: config.llm.max_tokens,
   }
-  const llm = initChatModel(llmConfig);
+  const model = initChatModel(llmConfig);
 
   console.log(`Initializing ${Object.keys(config.mcp_servers).length} MCP server(s)...\n`);
 
@@ -245,10 +227,9 @@ async function initializeReactAgent(config: Config, verbose: boolean, logDir: st
   const tools = toolsAndCleanup.tools;
   const mcpCleanup = toolsAndCleanup.cleanup;
 
-  const agent = createReactAgent({
-    llm,
+  const agent = createAgent({
+    model,
     tools,
-    checkpointSaver: new MemorySaver(),
   });
 
   async function cleanup() {
