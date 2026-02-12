@@ -2,6 +2,7 @@
 
 import "dotenv/config";
 import { createAgent, HumanMessage } from "langchain";
+import { MemorySaver } from "@langchain/langgraph-checkpoint";
 import { convertMcpToLangchainTools, McpServerCleanupFn, LlmProvider } from "@h1deya/langchain-mcp-tools";
 import { initChatModel } from "./init-chat-model.js";
 import { loadConfig, Config } from "./load-config.js";
@@ -230,6 +231,7 @@ async function initializeReactAgent(config: Config, verbose: boolean, logDir: st
   const agent = createAgent({
     model,
     tools,
+    checkpointer: new MemorySaver(),
   });
 
   async function cleanup() {
