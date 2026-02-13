@@ -262,6 +262,8 @@ async function main(): Promise<void> {
     const { agent, cleanup } = await initializeReactAgent(config, argv.verbose, argv.logDir);
     mcpCleanup = cleanup;
 
+    console.log(`\n${COLORS.GREEN}LLM model: ${config.llm.provider} / ${config.llm.model}${COLORS.RESET}`);
+
     await handleConversation(agent, config.example_queries ?? []);
 
   } catch (error) {

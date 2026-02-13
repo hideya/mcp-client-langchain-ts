@@ -29,6 +29,12 @@
         // "provider": "groq",         "model": "openai/gpt-oss-20b"
     },
 
+    // To disable the automatic schema transformations, uncomment the following line.
+    // See this for details about the schema transformations:
+    //   https://github.com/hideya/langchain-mcp-tools-ts/blob/main/README.md#llm-provider-schema-compatibility
+    //
+    // "schema_transformations": false,
+
     "example_queries": [
         "Read and briefly summarize the LICENSE file in the current directory",
         "Fetch the raw HTML content from bbc.com and tell me the titile",

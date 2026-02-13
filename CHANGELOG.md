@@ -6,10 +6,28 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 
+## [Unreleased]
+
+
+## [0.4.1] - 2026-02-13
+
+### Changed
+- Update README.md to show latest supported models
+- Show LLM provider and model name explicitly in the console log
+
+
+## [0.4.0] - 2026-02-13
+
+### Fixed
+- [Issue #20](https://github.com/hideya/mcp-client-langchain-ts/issues/20):
+  Make sure to work with latest models including GPT 5, Claude 4.5, Gemini 3 preview and Grok 4.1
+
+
 ## [0.3.9] - 2025-09-03
 
 ### Fixed
-- Issue #19: Gemini 1.5 needs improved schema transformations
+- [Issue #19](https://github.com/hideya/mcp-client-langchain-ts/issues/19):
+  Gemini 1.5 needs improved schema transformations for some MCP servers
 
 ### Changed
 - README_DEV.md, which was totally broken

@@ -7,7 +7,7 @@ A simple, text-based CLI client for [Model Context Protocol (MCP)](https://model
 This tool automatically adjusts the schema for LLM compatibility, which can help some failing MCP servers run successfully.  
 Suitable for testing MCP servers, exploring their capabilities, and prototyping integrations.
 
-Internally it uses  [LangChain ReAct Agent](https://github.com/langchain-ai/react-agent-js) and
+Internally it uses [LangChain Agent](https://github.com/langchain-ai/react-agent-js) and
 a utility function `convertMcpToLangchainTools()` from
 [`@h1deya/langchain-mcp-tools`](https://www.npmjs.com/package/@h1deya/langchain-mcp-tools).
 This function performs the aforementioned MCP tools schema transformations for LLM compatibility.
@@ -49,9 +49,9 @@ A Python equivalent of this utility is available [here](https://pypi.org/project
   {
     "llm": {
       "provider": "openai",       "model": "gpt-5-mini"
-      // "provider": "anthropic",    "model": "claude-3-5-haiku-latest"
+      // "provider": "anthropic",    "model": "claude-haiku-4-5"
       // "provider": "google_genai", "model": "gemini-2.5-flash"
-      // "provider": "xai",          "model": "grok-3-mini"
+      // "provider": "xai",          "model": "grok-4-1-fast-non-reasoning"
       // "provider": "cerebras",     "model": "gpt-oss-120b"
       // "provider": "groq",         "model": "openai/gpt-oss-20b"
     },
@@ -72,7 +72,7 @@ A Python equivalent of this utility is available [here](https://pypi.org/project
 
 - Set up API keys
   ```bash
-  echo "ANTHROPIC_API_KEY=sk-ant-...                                       
+  echo "ANTHROPIC_API_KEY=sk-ant-...
   OPENAI_API_KEY=sk-proj-...
   GOOGLE_API_KEY=AI...
   XAI_API_KEY=xai-...
@@ -142,10 +142,10 @@ mcp-client-cli --help
 
 ## Supported LLM Providers
 
-- **OpenAI**: `gpt-5-mini`, `gpt-4.1-nano`, etc.
-- **Anthropic**: `claude-sonnet-4-0`, `claude-3-5-haiku-latest`, etc.
-- **Google (GenAI)**: `gemini-2.5-flash`, `gemini-2.5-pro`, etc.
-- **xAI**: `grok-3-mini`, `grok-4`, etc.
+- **OpenAI**: `gpt-5-mini`, `gpt-5.2`, etc.
+- **Anthropic**: `claude-haiku-4-5`, `claude-3-5-haiku-latest`, etc.
+- **Google (GenAI)**: `gemini-2.5-flash`, `gemini-3-flash-preview`, etc.
+- **xAI**: `grok-3-mini`, `grok-4-1-fast-non-reasoning`, etc.
 - **Cerebras**: `gpt-oss-120b`, etc.
 - **Groq**: `openai/gpt-oss-20b`, `openai/gpt-oss-120b`, etc.
 
@@ -169,12 +169,12 @@ Create a `llm_mcp_config.json5` file:
 ```json5
 {
   "llm": {
-    "provider": "openai",       "model": "gpt-5-mini",
-    // "provider": "anthropic",    "model": "claude-3-5-haiku-latest",
-    // "provider": "google_genai", "model": "gemini-2.5-flash",
-    // "provider": "xai",          "model": "grok-3-mini",
-    // "provider": "cerebras",     "model": "gpt-oss-120b",
-    // "provider": "groq",         "model": "openai/gpt-oss-20b",
+    "provider": "openai",       "model": "gpt-5-mini"
+    // "provider": "anthropic",    "model": "claude-haiku-4-5"
+    // "provider": "google_genai", "model": "gemini-2.5-flash"
+    // "provider": "xai",          "model": "grok-4-1-fast-non-reasoning"
+    // "provider": "cerebras",     "model": "gpt-oss-120b"
+    // "provider": "groq",         "model": "openai/gpt-oss-20b"
   },
 
   // To disable the automatic schema transformations, uncomment the following line.
@@ -196,7 +196,7 @@ Create a `llm_mcp_config.json5` file:
   "mcp_servers": {
     // Local MCP server that uses `npx`
     "weather": {
-      "command": "npx", 
+      "command": "npx",
       "args": [ "-y", "@h1deya/mcp-server-weather" ]
     },
 
