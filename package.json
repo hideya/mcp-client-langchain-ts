@@ -1,6 +1,6 @@
 {
   "name": "@h1deya/mcp-client-cli",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "description": "Simple MCP Client to quickly test and explore MCP servers from the command line",
   "license": "MIT",
   "keywords": [

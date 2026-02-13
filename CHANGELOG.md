@@ -9,6 +9,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 
 
+## [0.4.2] - 2026-02-13
+
+### Changed
+- Update json5 example file to use 2 space for tabs
+- Refine examples in README.md
+
+
 ## [0.4.1] - 2026-02-13
 
 ### Changed
