@@ -19,6 +19,8 @@ A Python equivalent of this utility is available [here](https://pypi.org/project
 ## Prerequisites
 
 - Node.js 18+
+- [optional] [npm 7+ (`npx`)](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
+  to run Node.js package-based local MCP servers
 - [optional] [`uv` (`uvx`)](https://docs.astral.sh/uv/getting-started/installation/)
   installed to run Python-based local (stdio) MCP servers
 - LLM API key(s) from
@@ -48,7 +50,7 @@ A Python equivalent of this utility is available [here](https://pypi.org/project
   ```json5
   {
     "llm": {
-      "provider": "openai",       "model": "gpt-5-mini"
+      "provider": "openai",       "model": "gpt-5.4-mini"
       // "provider": "anthropic",    "model": "claude-haiku-4-5"
       // "provider": "google_genai", "model": "gemini-2.5-flash"
       // "provider": "xai",          "model": "grok-4-1-fast-non-reasoning"
@@ -142,10 +144,10 @@ mcp-client-cli --help
 
 ## Supported LLM Providers
 
-- **OpenAI**: `gpt-5-mini`, `gpt-5.2`, etc.
-- **Anthropic**: `claude-haiku-4-5`, `claude-3-5-haiku-latest`, etc.
-- **Google (GenAI)**: `gemini-2.5-flash`, `gemini-3-flash-preview`, etc.
-- **xAI**: `grok-3-mini`, `grok-4-1-fast-non-reasoning`, etc.
+- **OpenAI**: `gpt-5.4-mini`, `gpt-5.2`, etc.
+- **Anthropic**: `claude-sonnet-4-6`, `claude-haiku-4-5`, etc.
+- **Google (GenAI)**: `gemini-3.1-flash-lite-preview`, `gemini-2.5-flash`, etc.
+- **xAI**: `grok-4-1-fast-non-reasoning`, `grok-3-mini`, etc.
 - **Cerebras**: `gpt-oss-120b`, etc.
 - **Groq**: `openai/gpt-oss-20b`, `openai/gpt-oss-120b`, etc.
 
@@ -169,7 +171,7 @@ Create a `llm_mcp_config.json5` file:
 ```json5
 {
   "llm": {
-    "provider": "openai",       "model": "gpt-5-mini"
+    "provider": "openai",       "model": "gpt-5.4-mini"
     // "provider": "anthropic",    "model": "claude-haiku-4-5"
     // "provider": "google_genai", "model": "gemini-2.5-flash"
     // "provider": "xai",          "model": "grok-4-1-fast-non-reasoning"
@@ -184,11 +186,11 @@ Create a `llm_mcp_config.json5` file:
   // "schema_transformations": false,
 
   "example_queries": [
-    "Read and briefly summarize the LICENSE file in the current directory",
+    "Read and briefly summarize the llm_mcp_config.json5 file in the current directory",
     "Fetch the raw HTML content from bbc.com and tell me the titile",
     // "Search for 'news in California' and show the first hit",
-    // "Tell me about my default GitHub profile",
-    // "Tell me about my default Notion account",
+    // "Tell me about my authenticated GitHub profile",
+    // "Tell me about my authenticated Notion account",
   ],
 
   "mcp_servers": {
@@ -288,4 +290,5 @@ MIT License - see [LICENSE](LICENSE) file for details.
 
 ## Contributing
 
-Issues and pull requests welcome! This tool aims to make MCP server testing as simple as possible.
+Issues and pull requests welcome!  
+In particular, please share any issues relating to the latest versions of LLM models and specific MCP servers.
