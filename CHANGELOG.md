@@ -6,7 +6,13 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 
-## [Unreleased]
+## [0.4.3] - 2026-08-23
+
+### Changed
+- Documentation-only release
+- Clarify that this utility is based on `@h1deya/langchain-mcp-tools`,
+  which supports MCP Protocol version 2025-03-26 and does not support
+  the MCP 2026-07-28 specification
 
 
 ## [0.4.2] - 2026-02-13

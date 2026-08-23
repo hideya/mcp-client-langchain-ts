@@ -3,6 +3,20 @@
 
 **Quickly test and explore MCP servers from the command line!**
 
+## Project Status
+
+This utility is based on
+[`@h1deya/langchain-mcp-tools`](https://www.npmjs.com/package/@h1deya/langchain-mcp-tools),
+which currently supports **MCP Protocol version 2025-03-26**.
+
+It does **not** support the MCP **2026-07-28** specification.
+
+For new MCP integrations with LangChain, consider using
+[LangChain's official LangChain.js MCP Adapters library](https://www.npmjs.com/package/@langchain/mcp-adapters)
+directly.
+
+## Introduction
+
 A simple, text-based CLI client for [Model Context Protocol (MCP)](https://modelcontextprotocol.io/) servers built with LangChain and TypeScript.  
 This tool automatically adjusts the schema for LLM compatibility, which can help some failing MCP servers run successfully.  
 Suitable for testing MCP servers, exploring their capabilities, and prototyping integrations.
